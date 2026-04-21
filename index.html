@@ -1,0 +1,2892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>TaskPay - Earn Real Money</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- PWA Setup -->
+<link rel="manifest" href="/manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TaskPay">
+<meta name="theme-color" content="#1565C0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1565C0" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="/icon-192.png">
+
+<!-- Share/OG tags — referral link share karne pe preview acha dikhega -->
+<meta property="og:title" content="TaskPay - Coins Kamao, Paise Jeeto! 💰">
+<meta property="og:description" content="Spin karo, Ads dekho, Scratch karo aur real money kamao! Join karo aur +250 coins FREE pao!">
+<meta property="og:image" content="/icon-512.png">
+<meta property="og:type" content="website">
+
+<!-- Firebase SDK (compat version) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAfYgip4JhS1hljFCMg2WJTCuwG9ti7_fo",
+    authDomain: "task-pay-2828e.firebaseapp.com",
+    databaseURL: "https://task-pay-2828e-default-rtdb.firebaseio.com",
+    projectId: "task-pay-2828e",
+    storageBucket: "task-pay-2828e.firebasestorage.app",
+    messagingSenderId: "94738749059",
+    appId: "1:94738749059:web:7e68c441dea87fcee0adb6",
+    measurementId: "G-KQJGQQRY8H"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.database();
+  const provider = new firebase.auth.GoogleAuthProvider();
+</script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;width:100%;margin:0;padding:0;font-family:'Poppins',sans-serif;background:#070b1e;overflow:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:none}
+
+.phone{width:100%;height:100vh;border-radius:0;border:none;box-shadow:none;overflow:hidden;position:relative;background:#070b1e}
+
+/* SPLASH */
+#splash{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,#1a3a8f,#0d1f5c 45%,#060a1a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;z-index:10}
+.orb{position:absolute;border-radius:50%;filter:blur(55px);animation:orbPulse 4s ease-in-out infinite}
+.orb1{width:200px;height:200px;background:rgba(29,87,255,.35);top:-50px;left:-50px}
+.orb2{width:180px;height:180px;background:rgba(138,43,226,.3);bottom:-40px;right:-40px;animation-delay:2s}
+.orb3{width:130px;height:130px;background:rgba(0,212,255,.25);top:40%;right:-30px;animation-delay:1s}
+@keyframes orbPulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.3);opacity:1}}
+.ring{position:absolute;border-radius:50%;border:1.5px solid rgba(100,160,255,.2);top:32%;left:50%;transform:translate(-50%,-50%) scale(0);animation:expandRing 3s ease-out infinite}
+.ring:nth-child(3){width:150px;height:150px;animation-delay:0s}
+.ring:nth-child(4){width:230px;height:230px;animation-delay:.7s}
+.ring:nth-child(5){width:310px;height:310px;animation-delay:1.4s}
+@keyframes expandRing{0%{transform:translate(-50%,-50%) scale(0);opacity:1}100%{transform:translate(-50%,-50%) scale(1.3);opacity:0}}
+.splash-body{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;animation:splashIn 1s cubic-bezier(.34,1.56,.64,1)}
+@keyframes splashIn{0%{opacity:0;transform:scale(.5) translateY(30px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+.logo-wrap{position:relative;margin-bottom:14px}
+.logo-glow{position:absolute;inset:-22px;border-radius:50%;background:radial-gradient(circle,rgba(80,140,255,.5),transparent 70%);animation:glowPulse 2.5s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.3);opacity:1}}
+.logo-box{width:100px;height:100px;background:linear-gradient(135deg,#1976D2,#00BCD4,#7C3AED);border-radius:28px;display:flex;align-items:center;justify-content:center;font-size:50px;box-shadow:0 8px 40px rgba(25,118,210,.7),0 0 70px rgba(0,188,212,.3);border:2px solid rgba(255,255,255,.2);position:relative;z-index:2;animation:logoFloat 3s ease-in-out infinite}
+@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.app-name{font-size:38px;font-weight:900;letter-spacing:2px;background:linear-gradient(135deg,#fff,#90CAF9,#CE93D8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:fadeUp .8s ease forwards;animation-delay:.3s;opacity:0}
+.app-tagline{font-size:10px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:4px;margin-top:4px;animation:fadeUp .8s ease forwards;animation-delay:.5s;opacity:0}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:translateY(0)}}
+.feat-row{display:flex;gap:14px;margin-top:26px;animation:fadeUp .8s ease forwards;animation-delay:.7s;opacity:0}
+.feat-item{display:flex;flex-direction:column;align-items:center;gap:5px}
+.feat-icon{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid rgba(255,255,255,.12)}
+.feat-icon.bl{background:rgba(25,118,210,.25)}
+.feat-icon.gr{background:rgba(56,204,98,.25)}
+.feat-icon.pu{background:rgba(124,58,237,.25)}
+.feat-lbl{font-size:8.5px;color:rgba(255,255,255,.5);font-weight:500;text-align:center}
+.divider-row{display:flex;align-items:center;gap:10px;width:290px;margin:22px 0 18px;animation:fadeUp .8s ease forwards;animation-delay:.9s;opacity:0}
+.div-line{flex:1;height:1px;background:rgba(255,255,255,.1)}
+.div-txt{color:rgba(255,255,255,.3);font-size:9px;font-weight:500;letter-spacing:1.5px}
+.google-btn{width:290px;background:white;border:none;border-radius:18px;padding:14px 20px;display:flex;align-items:center;justify-content:center;gap:12px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:#1a1a2e;box-shadow:0 10px 35px rgba(0,0,0,.35);transition:all .25s;animation:btnPop .8s cubic-bezier(.34,1.56,.64,1) forwards;animation-delay:1.1s;opacity:0;position:relative;overflow:hidden}
+@keyframes btnPop{0%{opacity:0;transform:scale(.8) translateY(20px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+.google-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.4)}
+.google-btn:active{transform:scale(.97)}
+.google-btn:disabled{opacity:.7;cursor:not-allowed}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.spin-loader{width:20px;height:20px;border-radius:50%;border:3px solid #ccc;border-top-color:#1565C0;animation:spin .7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.terms{font-size:8.5px;color:rgba(255,255,255,.3);text-align:center;margin-top:12px;line-height:1.6;width:260px;animation:fadeUp .8s ease forwards;animation-delay:1.3s;opacity:0}
+.terms a{color:rgba(100,160,255,.7)}
+
+/* DASHBOARD */
+#dashboard{position:absolute;inset:0;background:#f0f6ff;display:none;flex-direction:column;opacity:0;transition:opacity .6s ease;z-index:5;height:100%}
+.d-header{background:linear-gradient(135deg,#1565C0,#1e88e5);padding:12px 14px 14px;flex-shrink:0}
+.d-row{display:flex;align-items:center;gap:8px}
+.d-avatar{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;overflow:hidden}
+.d-greet{flex:1}
+.d-greet small{color:rgba(255,255,255,.7);font-size:10px;display:block}
+.d-greet strong{color:#fff;font-size:17px;font-weight:800}
+.coins-pill{background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.3);border-radius:20px;padding:5px 12px;display:flex;align-items:center;gap:4px}
+.c-amt{color:#fff;font-weight:800;font-size:14px}
+.c-lbl{color:rgba(255,255,255,.65);font-size:8px;font-weight:600}
+.d-notif{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;flex-shrink:0;margin-left:4px;cursor:pointer}
+.d-content{flex:1;display:flex;flex-direction:column;gap:10px;padding:10px 10px 80px;padding-bottom:calc(70px + env(safe-area-inset-bottom, 0px));overflow:hidden;min-height:0}
+
+/* SPIN */
+.img-card{flex:1;height:0;border-radius:18px;overflow:hidden;position:relative;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.2);transition:transform .15s}
+.img-card:active{transform:scale(.97)}
+.card-bg{position:absolute;inset:0;background-size:300% 100%;background-repeat:no-repeat}
+.card-bg.spin{background:linear-gradient(135deg,#11998e,#38ef7d)}
+.card-bg.watch{background:linear-gradient(135deg,#56CCF2,#2980d9)}
+.card-bg.scratch{background:linear-gradient(135deg,#F7971E,#FFD200)}
+.card-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:10px}
+.card-title{color:#111;font-size:13px;font-weight:900;text-align:center;line-height:1.2;margin-bottom:8px;text-shadow:0 1px 2px rgba(255,255,255,.5)}
+.card-action-btn{border:none;border-radius:25px;padding:8px 28px;font-family:'Poppins',sans-serif;font-weight:800;font-size:12px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25);letter-spacing:.5px;transition:transform .15s}
+.card-action-btn:active{transform:scale(.95)}
+.btn-yellow{background:#FFD700;color:#1a1a1a}
+.btn-green{background:#27AE60;color:#fff}
+.btn-blue{background:#1565C0;color:#fff}
+.wheel-svg{transition:transform 3s cubic-bezier(.25,.46,.45,.94)}
+
+/* PLACEHOLDER */
+.placeholder{flex:1;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;min-height:0;padding-bottom:70px}
+.placeholder.show{display:flex}
+.ph-icon{font-size:60px}
+.ph-title{font-size:18px;font-weight:700;color:#1565C0}
+.ph-sub{font-size:11px;color:#90a4ae;text-align:center;padding:0 20px}
+
+/* ── DESKTOP MODE FORCE MOBILE LAYOUT ── */
+html {
+  background: #e8eaf0;
+}
+body {
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+  box-shadow: 0 0 40px rgba(0,0,0,.15);
+  min-height: 100vh;
+}
+/* Bottom nav stays within the 480px container */
+.bottom-nav {
+  max-width: 480px;
+  left: 50%;
+  transform: translateX(-50%);
+  right: auto;
+  width: 100%;
+}
+/* ── NAV */
+.bottom-nav{background:#fff;box-shadow:0 -3px 18px rgba(0,0,0,.08);padding:6px 4px 10px;flex-shrink:0;position:fixed;bottom:0;left:0;right:0;z-index:200;width:100%}
+.nav-row{display:flex;justify-content:space-around}
+.nav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 8px;border-radius:12px;border:none;background:transparent;cursor:pointer;font-family:'Poppins',sans-serif;transition:background .2s;min-width:52px}
+.nav-btn.active{background:rgba(21,101,192,.08)}
+.nav-btn svg{width:23px;height:23px}
+.ni{fill:#9e9e9e;transition:fill .2s}
+.nav-btn.active .ni{fill:#1565C0}
+.nl{font-size:8px;font-weight:600;letter-spacing:.3px;color:#9e9e9e;transition:color .2s}
+.nav-btn.active .nl{color:#1565C0;font-weight:700}
+.na{font-size:7px;color:#1565C0;font-weight:500}
+
+/* POPUP */
+.popup-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(4px)}
+.popup-overlay.show{display:flex}
+.popup-box{background:linear-gradient(135deg,#1565C0,#7C3AED);border-radius:24px;padding:30px 28px;text-align:center;border:2px solid rgba(255,255,255,.2);box-shadow:0 20px 60px rgba(0,0,0,.5);animation:popIn .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+.popup-big{font-size:60px;animation:bounce 1s ease infinite}
+@keyframes bounce{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.popup-amt{color:#FFD700;font-size:28px;font-weight:900;margin:8px 0 4px}
+.popup-msg{color:rgba(255,255,255,.8);font-size:12px;margin-bottom:20px}
+.popup-close{background:#FFD700;color:#1a1a1a;border:none;padding:10px 32px;border-radius:20px;font-family:'Poppins',sans-serif;font-weight:800;font-size:13px;cursor:pointer}
+
+/* PROFILE */
+.profile-card{background:white;border-radius:16px;padding:20px;margin:10px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(0,0,0,.08)}
+.sign-out-btn{background:#f44336;color:white;border:none;padding:10px 28px;border-radius:14px;font-family:'Poppins',sans-serif;font-weight:700;font-size:13px;cursor:pointer;margin-top:8px;box-shadow:0 4px 12px rgba(244,67,54,.3)}
+
+/* ── SPIN SCREEN ── */
+#spinScreen{
+  position:absolute;inset:0;
+  background:linear-gradient(160deg,#0f1d3a,#1a3a6f,#0d1f3c);
+  z-index:50;display:none;flex-direction:column;
+  align-items:center;overflow:hidden;
+}
+#spinScreen.show{display:flex}
+
+.spin-header{
+  width:100%;display:flex;align-items:center;
+  padding:36px 16px 12px;gap:10px;flex-shrink:0;
+}
+.spin-back{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.15);border:none;
+  color:#fff;font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.spin-header-title{flex:1;color:#fff;font-size:18px;font-weight:800;text-align:center}
+.spin-coins-badge{
+  background:rgba(255,215,0,.2);border:1.5px solid rgba(255,215,0,.5);
+  border-radius:20px;padding:5px 12px;
+  color:#FFD700;font-size:12px;font-weight:700;
+}
+
+/* TAB SWITCHER */
+.spin-tabs{
+  display:flex;gap:0;background:rgba(255,255,255,.08);
+  border-radius:14px;padding:4px;margin:0 16px 16px;
+  flex-shrink:0;width:calc(100% - 32px);
+}
+.spin-tab{
+  flex:1;padding:8px;border:none;border-radius:10px;
+  background:transparent;color:rgba(255,255,255,.5);
+  font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;
+  cursor:pointer;transition:all .3s;
+}
+.spin-tab.active{background:#1565C0;color:#fff;box-shadow:0 4px 12px rgba(21,101,192,.5)}
+
+/* WHEEL AREA */
+.spin-body{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:16px;padding:0 16px 16px;min-height:0;width:100%;
+}
+
+/* FREE WHEEL */
+.wheel-container{position:relative;width:240px;height:240px;flex-shrink:0}
+.free-wheel{
+  width:240px;height:240px;border-radius:50%;
+  border:8px solid #FFD700;
+  box-shadow:0 0 0 4px rgba(255,215,0,.3),0 10px 40px rgba(0,0,0,.5);
+  transition:transform 4s cubic-bezier(.17,.67,.12,.99);
+  cursor:pointer;overflow:hidden;
+}
+.wheel-pointer{
+  position:absolute;top:-10px;left:50%;
+  transform:translateX(-50%);
+  font-size:28px;z-index:10;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.6));
+}
+.wheel-center{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:36px;height:36px;
+  background:linear-gradient(135deg,#FFD700,#FF8C00);
+  border-radius:50%;border:4px solid #fff;
+  box-shadow:0 3px 12px rgba(0,0,0,.4);z-index:5;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;
+}
+
+/* SPIN INFO */
+.spin-limit{
+  background:rgba(255,255,255,.08);border-radius:12px;
+  padding:10px 20px;text-align:center;width:100%;
+}
+.spin-limit-txt{color:rgba(255,255,255,.7);font-size:11px;margin-bottom:4px}
+.spin-limit-bar{
+  height:6px;background:rgba(255,255,255,.15);
+  border-radius:3px;overflow:hidden;margin:6px 0 4px;
+}
+.spin-limit-fill{
+  height:100%;background:linear-gradient(90deg,#4CAF50,#8BC34A);
+  border-radius:3px;transition:width .5s ease;
+}
+.spin-limit-count{color:#FFD700;font-size:12px;font-weight:700}
+
+/* AD OVERLAY */
+.ad-overlay{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,.85);
+  display:none;align-items:center;justify-content:center;
+  z-index:200;flex-direction:column;gap:16px;
+  backdrop-filter:blur(4px);border-radius:0;
+}
+.ad-overlay.show{display:flex}
+.ad-box{
+  background:#1a1a2e;border-radius:20px;
+  padding:24px;text-align:center;width:280px;
+  border:1.5px solid rgba(255,255,255,.1);
+}
+.ad-icon{font-size:48px;margin-bottom:12px}
+.ad-title{color:#fff;font-size:16px;font-weight:800;margin-bottom:6px}
+.ad-sub{color:rgba(255,255,255,.6);font-size:11px;margin-bottom:16px;line-height:1.5}
+.ad-timer{
+  background:#FFD700;color:#1a1a1a;
+  border-radius:30px;padding:10px 28px;
+  font-weight:800;font-size:14px;border:none;
+  font-family:'Poppins',sans-serif;cursor:not-allowed;
+  display:block;width:100%;margin-bottom:8px;
+}
+.ad-timer.ready{background:#27AE60;color:#fff;cursor:pointer}
+
+/* PREMIUM WHEEL */
+.premium-wheel-wrap{
+  width:240px;height:240px;position:relative;flex-shrink:0;
+}
+.premium-wheel{
+  width:240px;height:240px;border-radius:50%;
+  border:8px solid;
+  border-image:linear-gradient(135deg,#FFD700,#FF6B6B,#9C27B0,#00BCD4) 1;
+  border-radius:50% !important;
+  box-shadow:0 0 0 4px rgba(255,215,0,.2),0 0 30px rgba(255,215,0,.3),0 10px 40px rgba(0,0,0,.5);
+  transition:transform 4s cubic-bezier(.17,.67,.12,.99);
+  cursor:pointer;overflow:hidden;
+  outline:8px solid #FFD700;outline-offset:-4px;
+}
+.premium-badge{
+  background:linear-gradient(135deg,#FFD700,#FF8C00);
+  color:#1a1a1a;font-size:10px;font-weight:800;
+  padding:4px 12px;border-radius:20px;
+  letter-spacing:1px;text-transform:uppercase;
+}
+.premium-lock{
+  background:rgba(255,255,255,.08);
+  border:1.5px solid rgba(255,215,0,.3);
+  border-radius:14px;padding:16px 20px;
+  text-align:center;width:100%;
+}
+.premium-lock-icon{font-size:36px;margin-bottom:8px}
+.premium-lock-txt{color:#FFD700;font-size:14px;font-weight:700;margin-bottom:4px}
+.premium-lock-sub{color:rgba(255,255,255,.5);font-size:10px;line-height:1.5}
+
+.spin-action-btn{
+  width:100%;padding:14px;border-radius:25px;border:none;
+  font-family:'Poppins',sans-serif;font-weight:800;
+  font-size:14px;cursor:pointer;letter-spacing:.8px;
+  box-shadow:0 6px 20px rgba(0,0,0,.3);
+  transition:transform .15s, opacity .2s;
+}
+.spin-action-btn:active{transform:scale(.96)}
+.spin-action-btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-spin-free{background:linear-gradient(135deg,#FFD700,#FF8C00);color:#1a1a1a}
+.btn-spin-premium{background:linear-gradient(135deg,#7C3AED,#9C27B0);color:#fff}
+
+/* Stars for spin screen */
+.spin-star{position:absolute;border-radius:50%;background:white;animation:twinkle 2s ease-in-out infinite}
+
+
+/* ── SCRATCH SCREEN ── */
+#scratchScreen{
+  position:absolute;inset:0;
+  background:linear-gradient(160deg,#1a0a00,#3d1a00,#1a0a00);
+  z-index:50;display:none;flex-direction:column;align-items:center;overflow:hidden;
+}
+#scratchScreen.show{display:flex}
+.scratch-header{
+  width:100%;display:flex;align-items:center;
+  padding:36px 16px 12px;gap:10px;flex-shrink:0;
+}
+.scratch-back{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.scratch-header-title{flex:1;color:#fff;font-size:18px;font-weight:800;text-align:center}
+.scratch-coins-badge{background:rgba(255,215,0,.2);border:1.5px solid rgba(255,215,0,.5);border-radius:20px;padding:5px 12px;color:#FFD700;font-size:12px;font-weight:700;}
+
+.scratch-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:0 20px 20px;width:100%;}
+
+/* SCRATCH CARD GAME */
+.scratch-card-game{
+  width:260px;height:160px;border-radius:20px;
+  background:linear-gradient(135deg,#FFD700,#FF8C00);
+  position:relative;overflow:hidden;
+  box-shadow:0 10px 40px rgba(255,140,0,.5);
+  border:3px solid rgba(255,255,255,.3);
+  flex-shrink:0;
+}
+.scratch-result{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:6px;
+}
+.scratch-result-icon{font-size:44px}
+.scratch-result-amt{font-size:28px;font-weight:900;color:#1a1a1a}
+.scratch-result-lbl{font-size:11px;color:rgba(0,0,0,.6);font-weight:600}
+
+/* Canvas for scratch effect */
+.scratch-canvas{
+  position:absolute;inset:0;
+  border-radius:17px;cursor:crosshair;
+  touch-action:none;
+}
+
+.scratch-info{
+  background:rgba(255,255,255,.08);border-radius:14px;
+  padding:12px 20px;text-align:center;width:100%;
+}
+.scratch-info-txt{color:rgba(255,255,255,.7);font-size:11px;margin-bottom:2px}
+.scratch-info-hint{color:#FFD700;font-size:12px;font-weight:700}
+
+.scratch-action-btn{
+  width:100%;padding:14px;border-radius:25px;border:none;
+  font-family:'Poppins',sans-serif;font-weight:800;
+  font-size:14px;cursor:pointer;
+  background:linear-gradient(135deg,#FFD700,#FF8C00);
+  color:#1a1a1a;box-shadow:0 6px 20px rgba(255,140,0,.4);
+  transition:transform .15s;
+}
+.scratch-action-btn:active{transform:scale(.96)}
+.scratch-action-btn:disabled{opacity:.5;cursor:not-allowed}
+
+</style>
+
+<!-- Google AdSense — Verification + Future Rewarded Ads -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2635078741275395" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="phone">
+
+  <!-- SPLASH -->
+  <div id="splash">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+
+    <!-- IN-APP BROWSER WARNING — WhatsApp/Instagram ke andar khula toh dikhega -->
+    <div id="inAppWarning" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,.92);z-index:999;display:none;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center">
+      <div style="font-size:56px;margin-bottom:16px">🌐</div>
+      <div style="color:#FFD700;font-size:18px;font-weight:800;margin-bottom:10px">Chrome mein kholo!</div>
+      <div style="color:rgba(255,255,255,.8);font-size:13px;line-height:1.7;margin-bottom:24px">
+        Google Login ke liye<br>
+        <strong style="color:#FFD700">Chrome browser</strong> zaroori hai.<br>
+        Neeche button dabao 👇
+      </div>
+      <button onclick="openInChrome()" style="background:linear-gradient(135deg,#4285F4,#1565C0);color:#fff;border:none;padding:16px 32px;border-radius:18px;font-family:Poppins,sans-serif;font-weight:800;font-size:15px;cursor:pointer;width:100%;margin-bottom:12px;box-shadow:0 8px 24px rgba(66,133,244,.4)">
+        🌐 Chrome mein Open Karo
+      </button>
+      <div style="color:rgba(255,255,255,.4);font-size:11px">
+        Ya browser ka ⋮ menu → "Open in Chrome" dabao
+      </div>
+    </div>
+
+    <div class="splash-body">
+      <div class="logo-wrap">
+        <div class="logo-glow"></div>
+        <div class="logo-box">💰</div>
+      </div>
+      <div class="app-name">TaskPay</div>
+      <div class="app-tagline">EARN · PLAY · WIN</div>
+      <div class="feat-row">
+        <div class="feat-item"><div class="feat-icon bl">🎡</div><div class="feat-lbl">Spin &amp;<br>Win</div></div>
+        <div class="feat-item"><div class="feat-icon gr">▶️</div><div class="feat-lbl">Watch<br>Ads</div></div>
+        <div class="feat-item"><div class="feat-icon pu">🎰</div><div class="feat-lbl">Scratch<br>Cards</div></div>
+      </div>
+      <div class="divider-row">
+        <div class="div-line"></div><div class="div-txt">GET STARTED</div><div class="div-line"></div>
+      </div>
+      <button class="google-btn" id="googleBtn" onclick="loginWithGoogle()">
+        <svg width="22" height="22" viewBox="0 0 24 24">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Sign in with Google
+      </button>
+      <div class="terms">By continuing, you agree to our<br><a href="/about.html" target="_blank">Terms of Service</a> &amp; <a href="/privacy.html" target="_blank">Privacy Policy</a></div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard">
+    <div class="d-header">
+      <div class="d-row">
+        <div class="d-avatar" id="userAvatar">👤</div>
+        <div class="d-greet">
+          <small>Hello,</small>
+          <strong id="userName">User!</strong>
+        </div>
+        <div class="coins-pill">
+          <span>🪙</span>
+          <span class="c-amt" id="coinCount">0</span>
+          <span class="c-lbl">COINS</span>
+        </div>
+        <div class="d-notif" onclick="doSignOut()" title="Logout">↩</div>
+      </div>
+    </div>
+
+    <!-- ALL TAB CONTENT WRAPPER -->
+    <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0">
+    <!-- HOME -->
+    <div class="d-content" id="homeContent">
+      <!-- SPIN CARD -->
+      <div class="img-card" onclick="openSpinScreen()">
+        <div class="card-bg spin"></div>
+        <div class="card-overlay">
+          <div style="font-size:36px;margin-bottom:4px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.3))">🎡</div>
+          <div style="color:#fff;font-size:13px;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,.4);margin-bottom:8px">SPIN &amp; WIN!</div>
+          <button class="card-action-btn btn-yellow" onclick="openSpinScreen()">🎡 SPIN NOW</button>
+        </div>
+      </div>
+      <!-- WATCH CARD -->
+      <div class="img-card" onclick="openWatchEarn()">
+        <div class="card-bg watch"></div>
+        <div class="card-overlay">
+          <div style="font-size:36px;margin-bottom:4px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.3))">▶️</div>
+          <div style="color:#fff;font-size:13px;font-weight:900;text-shadow:0 2px 8px rgba(0,0,0,.4);margin-bottom:8px">WATCH &amp; EARN</div>
+          <button class="card-action-btn btn-green">▶ WATCH NOW</button>
+        </div>
+      </div>
+      <!-- SCRATCH CARD -->
+      <div class="img-card" onclick="openScratchScreen()">
+        <div class="card-bg scratch"></div>
+        <div class="card-overlay">
+          <div style="font-size:36px;margin-bottom:4px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.3))">🎰</div>
+          <div style="color:#1a1a1a;font-size:13px;font-weight:900;text-shadow:0 1px 3px rgba(255,255,255,.5);margin-bottom:8px">SCRATCH &amp; WIN</div>
+          <button class="card-action-btn btn-blue" onclick="openScratchScreen()">✦ SCRATCH NOW</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- OTHER TABS -->
+    <div class="placeholder" id="appsContent" style="padding:0;justify-content:flex-start;align-items:stretch;flex-direction:column">
+      <!-- APPS TABS -->
+      <div style="display:flex;gap:0;background:rgba(21,101,192,.08);border-radius:14px;padding:4px;margin:12px 16px 0;flex-shrink:0">
+        <button onclick="switchAppsTab('apps')" id="appsTabBtn" style="flex:1;padding:9px;border:none;border-radius:10px;background:#FF6B35;color:#fff;font-family:Poppins,sans-serif;font-size:12px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(255,107,53,.4)">🎁 Offers</button>
+        <button onclick="switchAppsTab('survey')" id="surveyTabBtn" style="flex:1;padding:9px;border:none;border-radius:10px;background:transparent;color:#9e9e9e;font-family:Poppins,sans-serif;font-size:12px;font-weight:600;cursor:pointer">📋 Survey</button>
+      </div>
+
+      <!-- APPS TAB CONTENT — Firebase Offers Only -->
+      <div id="appsTabContent" style="flex:1;display:flex;flex-direction:column;gap:12px;padding:14px 14px 20px;overflow-y:auto">
+
+        <!-- OFFERS HEADER BANNER -->
+        <div style="background:linear-gradient(135deg,#FF6B35,#f7931e);border-radius:20px;padding:18px;display:flex;align-items:center;gap:14px;box-shadow:0 6px 20px rgba(255,107,53,.35)">
+          <div style="font-size:40px;flex-shrink:0">🎁</div>
+          <div>
+            <div style="color:#fff;font-size:15px;font-weight:900">Offers — Coins Kamao!</div>
+            <div style="color:rgba(255,255,255,.8);font-size:11px;margin-top:2px">Neeche diye gaye offers complete karo aur coins jeeto</div>
+          </div>
+        </div>
+
+        <!-- OFFERS LOADING STATE -->
+        <div id="offersLoading" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:40px 20px">
+          <div style="width:32px;height:32px;border:3px solid #e0e0e0;border-top-color:#FF6B35;border-radius:50%;animation:spin .7s linear infinite"></div>
+          <div style="font-size:12px;color:#90a4ae">Offers load ho rahi hain...</div>
+        </div>
+
+        <!-- OFFERS EMPTY STATE -->
+        <div id="offersEmpty" style="display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:40px 20px">
+          <div style="font-size:56px">🎁</div>
+          <div style="font-size:17px;font-weight:800;color:#FF6B35">Offers</div>
+          <div style="font-size:12px;color:#90a4ae;text-align:center;line-height:1.7">Abhi koi active offer nahi hai.<br>Jald hi naye offers aayenge — wapas check karo!</div>
+          <div style="background:linear-gradient(135deg,#FF6B35,#f7931e);border-radius:20px;padding:10px 28px">
+            <span style="color:#fff;font-size:12px;font-weight:700">⏳ Jald Aa Raha Hai</span>
+          </div>
+        </div>
+
+        <!-- FEATURED OFFERS — Dynamic from Firebase -->
+        <div id="featuredOffersSection" style="display:none">
+          <div style="font-size:13px;font-weight:800;color:#1a1a2e;margin-bottom:10px">🔥 Active Offers</div>
+          <div id="featuredOffersList" style="display:flex;flex-direction:column;gap:10px"></div>
+        </div>
+
+      </div>
+
+      <!-- SURVEY TAB CONTENT — Dynamic from Firebase -->
+      <div id="surveyTabContent" style="flex:1;display:none;flex-direction:column;gap:12px;padding:14px 14px 20px;overflow-y:auto">
+        <!-- Loading state -->
+        <div id="surveyLoading" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:40px 20px">
+          <div style="width:32px;height:32px;border:3px solid #e0e0e0;border-top-color:#7C3AED;border-radius:50%;animation:spin .7s linear infinite"></div>
+          <div style="font-size:12px;color:#90a4ae">Loading surveys...</div>
+        </div>
+        <!-- Surveys list (filled by JS) -->
+        <div id="surveyList" style="display:none;flex-direction:column;gap:12px"></div>
+        <!-- Empty / Coming Soon (shown when no active surveys) -->
+        <div id="surveyEmpty" style="display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:40px 20px">
+          <div style="font-size:56px">📋</div>
+          <div style="font-size:17px;font-weight:800;color:#7C3AED">Surveys</div>
+          <div style="font-size:12px;color:#90a4ae;text-align:center;line-height:1.7">Abhi koi active survey nahi hai.<br>Jald hi naye surveys aayenge — wapas check karo!</div>
+          <div style="background:linear-gradient(135deg,#7C3AED,#a855f7);border-radius:20px;padding:10px 28px">
+            <span style="color:#fff;font-size:12px;font-weight:700">⏳ Jald Aa Raha Hai</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="placeholder" id="referContent" style="padding:0;justify-content:flex-start;align-items:stretch;flex-direction:column;overflow-y:auto">
+
+      <!-- TOP BANNER -->
+      <div style="background:linear-gradient(135deg,#1565C0,#7C3AED);margin:12px;border-radius:20px;padding:20px;box-shadow:0 8px 24px rgba(21,101,192,.4)">
+
+        <!-- Coins info -->
+        <div style="display:flex;justify-content:space-around;margin-bottom:16px">
+          <div style="text-align:center">
+            <div style="color:#FFD700;font-size:22px;font-weight:900">+500</div>
+            <div style="color:rgba(255,255,255,.7);font-size:9px">Aapko milega</div>
+          </div>
+          <div style="width:1px;background:rgba(255,255,255,.2)"></div>
+          <div style="text-align:center">
+            <div style="color:#4CAF50;font-size:22px;font-weight:900">+250</div>
+            <div style="color:rgba(255,255,255,.7);font-size:9px">Friend ko milega</div>
+          </div>
+        </div>
+
+        <!-- Referral Code Box -->
+        <div style="background:rgba(0,0,0,.25);border:2px dashed rgba(255,255,255,.35);border-radius:14px;padding:14px;text-align:center;margin-bottom:14px">
+          <div style="color:rgba(255,255,255,.6);font-size:9px;font-weight:600;letter-spacing:2px;margin-bottom:6px">YOUR REFERRAL CODE</div>
+          <div style="color:#FFD700;font-size:30px;font-weight:900;letter-spacing:6px" id="userReferCode">----</div>
+        </div>
+
+        <!-- Copy Button -->
+        <button onclick="copyReferLink()" style="width:100%;background:#FFD700;color:#1a1a1a;border:none;padding:12px;border-radius:14px;font-family:Poppins,sans-serif;font-weight:800;font-size:13px;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px">
+          📋 Copy Referral Link
+        </button>
+
+        <!-- Share Buttons Row -->
+        <div style="display:flex;justify-content:space-around">
+          <button onclick="shareOn('whatsapp')" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;cursor:pointer">
+            <div style="width:44px;height:44px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px">💬</div>
+            <span style="color:rgba(255,255,255,.7);font-size:9px">WhatsApp</span>
+          </button>
+          <button onclick="shareOn('instagram')" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;cursor:pointer">
+            <div style="width:44px;height:44px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px">📸</div>
+            <span style="color:rgba(255,255,255,.7);font-size:9px">Instagram</span>
+          </button>
+          <button onclick="shareOn('facebook')" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;cursor:pointer">
+            <div style="width:44px;height:44px;background:#1877F2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px">👍</div>
+            <span style="color:rgba(255,255,255,.7);font-size:9px">Facebook</span>
+          </button>
+          <button onclick="shareOn('telegram')" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;cursor:pointer">
+            <div style="width:44px;height:44px;background:#0088cc;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px">✈️</div>
+            <span style="color:rgba(255,255,255,.7);font-size:9px">Telegram</span>
+          </button>
+          <button onclick="shareOn('other')" style="display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;cursor:pointer">
+            <div style="width:44px;height:44px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px">📤</div>
+            <span style="color:rgba(255,255,255,.7);font-size:9px">More</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- STATS ROW -->
+      <div style="display:flex;gap:10px;margin:0 12px 12px">
+        <div style="flex:1;background:#fff;border-radius:14px;padding:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.07)">
+          <div style="font-size:22px;font-weight:900;color:#1565C0" id="totalReferrals">0</div>
+          <div style="font-size:9px;color:#90a4ae;font-weight:600;margin-top:2px">👥 Joined</div>
+        </div>
+        <div style="flex:1;background:#fff;border-radius:14px;padding:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.07)">
+          <div style="font-size:22px;font-weight:900;color:#27AE60" id="referEarned">0</div>
+          <div style="font-size:9px;color:#90a4ae;font-weight:600;margin-top:2px">🪙 Earned</div>
+        </div>
+        <div style="flex:1;background:#fff;border-radius:14px;padding:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.07)">
+          <div style="font-size:22px;font-weight:900;color:#7C3AED">₹<span id="referRupees">0</span></div>
+          <div style="font-size:9px;color:#90a4ae;font-weight:600;margin-top:2px">💸 Value</div>
+        </div>
+      </div>
+
+      <!-- HOW IT WORKS -->
+      <div style="background:#fff;margin:0 12px 12px;border-radius:16px;padding:16px;box-shadow:0 4px 14px rgba(0,0,0,.07)">
+        <div style="font-size:13px;font-weight:800;color:#1a1a2e;margin-bottom:12px">📖 Kaise Kaam Karta Hai</div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div style="width:36px;height:36px;background:linear-gradient(135deg,#1565C0,#1e88e5);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">1️⃣</div>
+          <div><div style="font-size:12px;font-weight:700;color:#1a1a2e">Link Share Karo</div><div style="font-size:10px;color:#90a4ae">WhatsApp, Instagram pe bhejo</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div style="width:36px;height:36px;background:linear-gradient(135deg,#7C3AED,#a855f7);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">2️⃣</div>
+          <div><div style="font-size:12px;font-weight:700;color:#1a1a2e">Friend Link Khole</div><div style="font-size:10px;color:#90a4ae">Link se app open hoga — auto detect!</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:36px;height:36px;background:linear-gradient(135deg,#27AE60,#4CAF50);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">3️⃣</div>
+          <div><div style="font-size:12px;font-weight:700;color:#1a1a2e">Dono Ko Coins!</div><div style="font-size:10px;color:#90a4ae">Aapko +500, unhe +250 auto!</div></div>
+        </div>
+      </div>
+
+      <!-- REFERRED FRIENDS LIST -->
+      <div style="background:#fff;margin:0 12px 16px;border-radius:16px;padding:16px;box-shadow:0 4px 14px rgba(0,0,0,.07)">
+        <div style="font-size:13px;font-weight:800;color:#1a1a2e;margin-bottom:12px">👥 Joined Friends</div>
+        <div id="referredList">
+          <div style="text-align:center;padding:20px 0">
+            <div style="font-size:36px;margin-bottom:8px">🤝</div>
+            <div style="font-size:12px;color:#90a4ae">Abhi koi friend join nahi kiya</div>
+            <div style="font-size:11px;color:#bdbdbd;margin-top:4px">Link share karo earning shuru karo!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="placeholder" id="walletContent" style="padding:0;justify-content:flex-start;align-items:stretch;flex-direction:column;overflow-y:auto">
+
+      <!-- BALANCE CARD -->
+      <div style="background:linear-gradient(135deg,#1565C0,#0d47a1);margin:12px;border-radius:20px;padding:22px;box-shadow:0 8px 28px rgba(21,101,192,.45);flex-shrink:0">
+        <div style="color:rgba(255,255,255,.7);font-size:11px;font-weight:600;letter-spacing:1.5px;margin-bottom:8px">TOTAL BALANCE</div>
+        <div style="display:flex;align-items:flex-end;gap:8px;margin-bottom:6px">
+          <div style="color:#FFD700;font-size:38px;font-weight:900" id="walletCoins">0</div>
+          <div style="color:rgba(255,255,255,.6);font-size:14px;font-weight:600;margin-bottom:6px">COINS</div>
+        </div>
+        <div style="color:rgba(255,255,255,.5);font-size:12px;margin-bottom:18px">≈ ₹<span id="walletRupees">0.00</span> &nbsp;|&nbsp; 100 coins = ₹1</div>
+
+        <!-- PROGRESS TO WITHDRAWAL -->
+        <div style="margin-bottom:6px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+            <span style="color:rgba(255,255,255,.7);font-size:10px">Withdrawal Progress</span>
+            <span style="color:#FFD700;font-size:10px;font-weight:700"><span id="withdrawProgress">0</span>/5000 coins</span>
+          </div>
+          <div style="height:7px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden">
+            <div id="withdrawProgressBar" style="height:100%;background:linear-gradient(90deg,#FFD700,#FF8C00);border-radius:4px;transition:width .5s ease;width:0%"></div>
+          </div>
+          <div style="color:rgba(255,255,255,.5);font-size:9px;margin-top:5px" id="withdrawHint">Need 5000 coins to withdraw (₹50)</div>
+        </div>
+      </div>
+
+      <!-- QUICK STATS -->
+      <div style="display:flex;gap:10px;margin:0 12px 12px;flex-shrink:0">
+        <div style="flex:1;background:#fff;border-radius:14px;padding:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.07)">
+          <div style="font-size:18px;font-weight:900;color:#27AE60" id="totalEarned">0</div>
+          <div style="font-size:9px;color:#90a4ae;font-weight:600;margin-top:2px">Total Earned</div>
+        </div>
+        <div style="flex:1;background:#fff;border-radius:14px;padding:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.07)">
+          <div style="font-size:18px;font-weight:900;color:#F44336" id="totalWithdrawn">₹0</div>
+          <div style="font-size:9px;color:#90a4ae;font-weight:600;margin-top:2px">Withdrawn</div>
+        </div>
+        <div style="flex:1;background:#fff;border-radius:14px;padding:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.07)">
+          <div style="font-size:18px;font-weight:900;color:#7C3AED" id="pendingWithdraw">₹0</div>
+          <div style="font-size:9px;color:#90a4ae;font-weight:600;margin-top:2px">Pending</div>
+        </div>
+      </div>
+
+      <!-- WITHDRAW BUTTON -->
+      <div style="margin:0 12px 12px;flex-shrink:0">
+        <button id="withdrawBtn" onclick="openWithdrawScreen()" style="width:100%;padding:14px;border-radius:16px;border:none;font-family:Poppins,sans-serif;font-weight:800;font-size:14px;cursor:pointer;background:linear-gradient(135deg,#27AE60,#4CAF50);color:#fff;box-shadow:0 6px 20px rgba(39,174,96,.4);transition:transform .15s;display:flex;align-items:center;justify-content:center;gap:8px" disabled>
+          🔒 5000 Coins Required to Withdraw
+        </button>
+      </div>
+
+      <!-- TRANSACTION HISTORY -->
+      <div style="background:#fff;margin:0 12px 16px;border-radius:16px;padding:16px;box-shadow:0 4px 14px rgba(0,0,0,.07);flex-shrink:0">
+        <div style="font-size:13px;font-weight:800;color:#1a1a2e;margin-bottom:12px">📋 Transaction History</div>
+        <div id="txHistory">
+          <div style="text-align:center;padding:20px 0">
+            <div style="font-size:36px;margin-bottom:8px">📭</div>
+            <div style="font-size:12px;color:#90a4ae">Koi transaction nahi abhi</div>
+            <div style="font-size:10px;color:#bdbdbd;margin-top:4px">Earn coins to see history!</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════ WITHDRAW SCREEN ══════ -->
+    <div id="withdrawScreen" style="position:absolute;inset:0;background:#f0f6ff;z-index:50;display:none;flex-direction:column;overflow-y:auto">
+
+      <!-- HEADER -->
+      <div style="background:linear-gradient(135deg,#27AE60,#4CAF50);padding:36px 16px 16px;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:10px">
+          <button onclick="closeWithdrawScreen()" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);border:none;color:#fff;font-size:18px;cursor:pointer">←</button>
+          <div style="color:#fff;font-size:18px;font-weight:800;flex:1;text-align:center">💸 Withdraw</div>
+          <div style="width:36px"></div>
+        </div>
+      </div>
+
+      <div style="padding:16px;display:flex;flex-direction:column;gap:14px">
+
+        <!-- AVAILABLE BALANCE -->
+        <div style="background:linear-gradient(135deg,#27AE60,#4CAF50);border-radius:18px;padding:20px;text-align:center;box-shadow:0 8px 24px rgba(39,174,96,.3)">
+          <div style="color:rgba(255,255,255,.8);font-size:11px;font-weight:600;margin-bottom:6px">AVAILABLE TO WITHDRAW</div>
+          <div style="color:#fff;font-size:32px;font-weight:900">₹<span id="availableRupees">0</span></div>
+          <div style="color:rgba(255,255,255,.6);font-size:11px;margin-top:4px"><span id="availableCoins">0</span> coins</div>
+        </div>
+
+        <!-- UPI FORM -->
+        <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 4px 14px rgba(0,0,0,.07)">
+          <div style="font-size:14px;font-weight:800;color:#1a1a2e;margin-bottom:16px">💳 Enter UPI Details</div>
+
+          <div style="margin-bottom:14px">
+            <div style="font-size:11px;font-weight:700;color:#555;margin-bottom:6px">UPI ID</div>
+            <input id="upiInput" type="text" placeholder="yourname@upi" style="width:100%;padding:12px 14px;border:2px solid #e0e0e0;border-radius:12px;font-family:Poppins,sans-serif;font-size:13px;outline:none;transition:border .2s" onfocus="this.style.borderColor='#1565C0'" onblur="this.style.borderColor='#e0e0e0'">
+          </div>
+
+          <div style="margin-bottom:14px">
+            <div style="font-size:11px;font-weight:700;color:#555;margin-bottom:6px">Phone Number (OTP Verify)</div>
+            <input id="phoneInput" type="tel" placeholder="+91 XXXXX XXXXX" style="width:100%;padding:12px 14px;border:2px solid #e0e0e0;border-radius:12px;font-family:Poppins,sans-serif;font-size:13px;outline:none;transition:border .2s" onfocus="this.style.borderColor='#1565C0'" onblur="this.style.borderColor='#e0e0e0'">
+          </div>
+
+          <!-- OTP Section -->
+          <div id="otpSection" style="display:none;margin-bottom:14px">
+            <div style="font-size:11px;font-weight:700;color:#555;margin-bottom:6px">Enter OTP</div>
+            <input id="otpInput" type="number" placeholder="6-digit OTP" style="width:100%;padding:12px 14px;border:2px solid #e0e0e0;border-radius:12px;font-family:Poppins,sans-serif;font-size:13px;outline:none">
+          </div>
+
+          <button id="sendOtpBtn" onclick="sendOTP()" style="width:100%;padding:12px;border-radius:12px;border:none;font-family:Poppins,sans-serif;font-weight:700;font-size:13px;background:#1565C0;color:#fff;cursor:pointer;margin-bottom:10px">
+            📱 Send OTP
+          </button>
+
+          <button id="withdrawSubmitBtn" onclick="submitWithdraw()" style="width:100%;padding:14px;border-radius:14px;border:none;font-family:Poppins,sans-serif;font-weight:800;font-size:14px;background:linear-gradient(135deg,#27AE60,#4CAF50);color:#fff;cursor:pointer;display:none;box-shadow:0 6px 18px rgba(39,174,96,.4)">
+              ✅ Confirm Withdrawal
+            </button>
+        </div>
+
+        <!-- WARNING -->
+        <div style="background:#FFF3E0;border:1.5px solid #FFB74D;border-radius:14px;padding:14px">
+          <div style="font-size:12px;font-weight:700;color:#E65100;margin-bottom:6px">⚠️ Important Note</div>
+          <div style="font-size:10px;color:#BF360C;line-height:1.6">
+            • Withdrawal 24-48 hours mein process hogi<br>
+            • Ek baar UPI verify hone ke baad change nahi hoga<br>
+            • Fake information dene pe account ban hoga<br>
+            • Minimum withdrawal: 5000 coins = ₹50
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="placeholder" id="profileContent" style="padding:0;justify-content:flex-start;align-items:stretch;flex-direction:column;overflow-y:auto">
+
+      <!-- PROFILE HEADER -->
+      <div style="background:linear-gradient(135deg,#1565C0,#7C3AED);padding:30px 20px 24px;text-align:center;flex-shrink:0;position:relative">
+        <!-- Avatar -->
+        <div style="position:relative;display:inline-block;margin-bottom:12px">
+          <div id="profilePic" style="width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.25);border:3px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto;overflow:hidden"></div>
+          <div style="position:absolute;bottom:0;right:0;width:24px;height:24px;background:#FFD700;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;border:2px solid #fff">✏️</div>
+        </div>
+        <div style="color:#fff;font-size:20px;font-weight:900;margin-bottom:2px" id="profileName">User</div>
+        <div style="color:rgba(255,255,255,.65);font-size:11px" id="profileEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fc898f998ebc9b919d9590d29f9391">[email&#160;protected]</a></div>
+        <!-- Member badge -->
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,215,0,.2);border:1.5px solid rgba(255,215,0,.4);border-radius:20px;padding:5px 14px;margin-top:10px">
+          <span style="font-size:12px">⭐</span>
+          <span style="color:#FFD700;font-size:11px;font-weight:700">TaskPay Member</span>
+        </div>
+      </div>
+
+      <!-- COINS SUMMARY -->
+      <div style="display:flex;gap:10px;margin:12px;flex-shrink:0">
+        <div style="flex:1;background:#fff;border-radius:14px;padding:13px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.07)">
+          <div style="font-size:20px;font-weight:900;color:#FFD700" id="profileCoins">0</div>
+          <div style="font-size:9px;color:#90a4ae;font-weight:600;margin-top:2px">🪙 Coins</div>
+        </div>
+        <div style="flex:1;background:#fff;border-radius:14px;padding:13px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.07)">
+          <div style="font-size:20px;font-weight:900;color:#1565C0" id="profileReferrals">0</div>
+          <div style="font-size:9px;color:#90a4ae;font-weight:600;margin-top:2px">👥 Referrals</div>
+        </div>
+        <div style="flex:1;background:#fff;border-radius:14px;padding:13px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.07)">
+          <div style="font-size:20px;font-weight:900;color:#27AE60">₹<span id="profileEarned">0</span></div>
+          <div style="font-size:9px;color:#90a4ae;font-weight:600;margin-top:2px">💸 Earned</div>
+        </div>
+      </div>
+
+      <!-- MENU OPTIONS -->
+      <div style="background:#fff;margin:0 12px 12px;border-radius:16px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.07);flex-shrink:0">
+
+        <div onclick="openEditProfile()" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #f5f5f5;cursor:pointer">
+          <div style="width:38px;height:38px;background:linear-gradient(135deg,#1565C0,#1e88e5);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px">👤</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700;color:#1a1a2e">Edit Profile</div>
+            <div style="font-size:10px;color:#90a4ae">Name, photo update karo</div>
+          </div>
+          <div style="color:#bdbdbd;font-size:16px">›</div>
+        </div>
+
+        <div onclick="openPaymentScreen()" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #f5f5f5;cursor:pointer">
+          <div style="width:38px;height:38px;background:linear-gradient(135deg,#27AE60,#4CAF50);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px">💳</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700;color:#1a1a2e">Payment Methods</div>
+            <div style="font-size:10px;color:#90a4ae">UPI, Bank details manage karo</div>
+          </div>
+          <div style="color:#bdbdbd;font-size:16px">›</div>
+        </div>
+
+        <div onclick="openNotifScreen()" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #f5f5f5;cursor:pointer">
+          <div style="width:38px;height:38px;background:linear-gradient(135deg,#FF8C00,#FFD700);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px">🔔</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700;color:#1a1a2e">Notifications</div>
+            <div style="font-size:10px;color:#90a4ae">Push notifications manage karo</div>
+          </div>
+          <div style="color:#bdbdbd;font-size:16px">›</div>
+        </div>
+
+        <div onclick="openPrivacySecScreen()" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #f5f5f5;cursor:pointer">
+          <div style="width:38px;height:38px;background:linear-gradient(135deg,#7C3AED,#a855f7);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px">🔒</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700;color:#1a1a2e">Privacy & Security</div>
+            <div style="font-size:10px;color:#90a4ae">Account security settings</div>
+          </div>
+          <div style="color:#bdbdbd;font-size:16px">›</div>
+        </div>
+
+        <div onclick="openHelpScreen()" style="display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer">
+          <div style="width:38px;height:38px;background:linear-gradient(135deg,#00BCD4,#0097A7);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px">❓</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700;color:#1a1a2e">Help & Support</div>
+            <div style="font-size:10px;color:#90a4ae">FAQ, contact us</div>
+          </div>
+          <div style="color:#bdbdbd;font-size:16px">›</div>
+        </div>
+      </div>
+
+      <!-- APP INFO -->
+      <div style="background:#fff;margin:0 12px 12px;border-radius:16px;padding:14px 16px;box-shadow:0 4px 14px rgba(0,0,0,.07);flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+          <div style="width:38px;height:38px;background:linear-gradient(135deg,#1565C0,#7C3AED);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px">💰</div>
+          <div>
+            <div style="font-size:13px;font-weight:800;color:#1a1a2e">TaskPay</div>
+            <div style="font-size:10px;color:#90a4ae">Version 1.0.0</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <div onclick="window.open('/about.html','_blank')" style="flex:1;text-align:center;font-size:10px;color:#1565C0;font-weight:600;cursor:pointer;padding:6px;background:#f0f6ff;border-radius:8px">About Us</div>
+          <div onclick="window.open('/privacy.html','_blank')" style="flex:1;text-align:center;font-size:10px;color:#1565C0;font-weight:600;cursor:pointer;padding:6px;background:#f0f6ff;border-radius:8px">Privacy Policy</div>
+          <div onclick="window.open('/contact.html','_blank')" style="flex:1;text-align:center;font-size:10px;color:#7C3AED;font-weight:600;cursor:pointer;padding:6px;background:#f3e5f5;border-radius:8px">Contact</div>
+        </div>
+      </div>
+
+      <!-- SIGN OUT -->
+      <div style="margin:0 12px 20px;flex-shrink:0">
+        <button onclick="doSignOut()" style="width:100%;padding:14px;border-radius:16px;border:none;font-family:Poppins,sans-serif;font-weight:800;font-size:14px;cursor:pointer;background:#FFF0F0;color:#F44336;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 12px rgba(244,67,54,.15)">
+          ↩ Sign Out
+        </button>
+      </div>
+
+    </div>
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <div class="nav-row">
+        <button class="nav-btn active" data-tab="home" onclick="switchTab(this,event)">
+          <svg viewBox="0 0 24 24"><path class="ni" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          <span class="nl">HOME</span><span class="na">ACTIVE</span>
+        </button>
+        <button class="nav-btn" data-tab="apps" onclick="switchTab(this,event)">
+          <svg viewBox="0 0 24 24"><path class="ni" d="M4 4h4v4H4V4zm6 0h4v4h-4V4zm6 0h4v4h-4V4zM4 10h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4zM4 16h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4z"/></svg>
+          <span class="nl">APPS</span>
+        </button>
+        <button class="nav-btn" data-tab="refer" onclick="switchTab(this,event)">
+          <svg viewBox="0 0 24 24"><path class="ni" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          <span class="nl">REFER</span>
+        </button>
+        <button class="nav-btn" data-tab="wallet" onclick="switchTab(this,event)">
+          <svg viewBox="0 0 24 24"><path class="ni" d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+          <span class="nl">WALLET</span>
+        </button>
+        <button class="nav-btn" data-tab="profile" onclick="switchTab(this,event)">
+          <svg viewBox="0 0 24 24"><path class="ni" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          <span class="nl">PROFILE</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- WIN POPUP -->
+    <div class="popup-overlay" id="popup">
+      <div class="popup-box">
+        <div class="popup-big" id="popupIcon">🎉</div>
+        <div class="popup-amt" id="popupAmt">+50 COINS</div>
+        <div class="popup-msg" id="popupMsg">You won coins!</div>
+        <button class="popup-close" onclick="closePopup()">AWESOME! 🎉</button>
+      </div>
+    </div>
+  </div>
+
+
+
+    <!-- ══════ PRIVACY POLICY SCREEN ══════ -->
+    <div id="privacyScreen" style="position:absolute;inset:0;background:#fff;z-index:100;display:none;flex-direction:column;overflow:hidden">
+      <div style="background:linear-gradient(135deg,#1565C0,#7C3AED);padding:36px 16px 16px;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:10px">
+          <button onclick="document.getElementById('privacyScreen').style.display='none'" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);border:none;color:#fff;font-size:18px;cursor:pointer">←</button>
+          <div style="color:#fff;font-size:17px;font-weight:800;flex:1;text-align:center">Privacy Policy</div>
+          <div style="width:36px"></div>
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px">
+        <div style="font-size:11px;color:#90a4ae;margin-bottom:16px">Last updated: March 2026</div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#1565C0;margin-bottom:8px">1. Information We Collect</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">We collect information you provide when you register, including your name, email address, and profile photo through Google Sign-In. We also collect usage data such as coins earned, tasks completed, and withdrawal history.</div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#1565C0;margin-bottom:8px">2. How We Use Your Information</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">Your information is used to:<br>• Provide and improve TaskPay services<br>• Process coin rewards and withdrawals<br>• Send important notifications<br>• Prevent fraud and abuse<br>• Comply with legal obligations</div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#1565C0;margin-bottom:8px">3. Data Security</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">We use Firebase by Google to securely store your data. All data is encrypted in transit and at rest. We never sell your personal information to third parties.</div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#1565C0;margin-bottom:8px">4. Cookies & Tracking</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">We use local storage to save your progress and preferences. Third-party ad networks may use cookies to show relevant advertisements.</div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#1565C0;margin-bottom:8px">5. Third-Party Services</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">TaskPay uses:<br>• Google Firebase (Authentication & Database)<br>• Google Analytics (Usage tracking)<br>• Google AdSense (Advertising) — <a href="https://policies.google.com/privacy" target="_blank" style="color:#1565C0">Google Privacy Policy</a><br>Each service has its own privacy policy.</div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#1565C0;margin-bottom:8px">6. Children's Privacy</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">TaskPay is not intended for users under 13 years of age. We do not knowingly collect data from children under 13.</div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#1565C0;margin-bottom:8px">7. Your Rights</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">You may request deletion of your account and data at any time by contacting us. You can also opt out of personalized ads through your device settings.</div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#1565C0;margin-bottom:8px">8. Contact Us</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">For privacy concerns, contact us at:<br><strong style="color:#1565C0"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" >support@taskpay.app</a></strong></div>
+        </div>
+
+        <div style="background:#f0f6ff;border-radius:12px;padding:14px;text-align:center;margin-bottom:20px">
+          <div style="font-size:11px;color:#1565C0;font-weight:600">By using TaskPay, you agree to this Privacy Policy</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ TERMS OF SERVICE SCREEN ══════ -->
+    <div id="termsScreen" style="position:absolute;inset:0;background:#fff;z-index:100;display:none;flex-direction:column;overflow:hidden">
+      <div style="background:linear-gradient(135deg,#7C3AED,#a855f7);padding:36px 16px 16px;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:10px">
+          <button onclick="document.getElementById('termsScreen').style.display='none'" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);border:none;color:#fff;font-size:18px;cursor:pointer">←</button>
+          <div style="color:#fff;font-size:17px;font-weight:800;flex:1;text-align:center">Terms of Service</div>
+          <div style="width:36px"></div>
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px">
+        <div style="font-size:11px;color:#90a4ae;margin-bottom:16px">Last updated: March 2026</div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#7C3AED;margin-bottom:8px">1. Acceptance of Terms</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">By accessing and using TaskPay, you agree to be bound by these Terms of Service. If you do not agree, please do not use our app.</div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#7C3AED;margin-bottom:8px">2. Eligibility</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">You must be at least 13 years old to use TaskPay. By using the app, you confirm you meet this requirement. Users in India must be 18+ for withdrawal.</div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#7C3AED;margin-bottom:8px">3. Coins & Rewards</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">• Coins have no real-world monetary value until redeemed<br>• Minimum withdrawal: 5000 coins = ₹50<br>• Coins cannot be transferred between accounts<br>• TaskPay reserves the right to adjust coin values<br>• Unused coins expire after 365 days of inactivity</div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#7C3AED;margin-bottom:8px">4. Prohibited Activities</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">The following are strictly prohibited:<br>• Creating multiple accounts<br>• Using bots or automation tools<br>• Fake referrals or self-referrals<br>• Any form of fraud or cheating<br>• Violating any applicable laws<br><br>Violation will result in immediate account termination and forfeiture of all coins.</div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#7C3AED;margin-bottom:8px">5. Withdrawals</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">• Withdrawals are processed within 24-48 hours<br>• Valid UPI ID and phone verification required<br>• TaskPay reserves the right to delay suspicious withdrawals<br>• All withdrawals are final once processed</div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#7C3AED;margin-bottom:8px">6. Account Termination</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">TaskPay reserves the right to suspend or terminate accounts that violate these terms without prior notice. Terminated accounts forfeit all earned coins.</div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#7C3AED;margin-bottom:8px">7. Disclaimer</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">TaskPay is provided "as is" without warranties. We are not responsible for technical issues, server downtime, or loss of earned rewards due to technical failures.</div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:15px;font-weight:800;color:#7C3AED;margin-bottom:8px">8. Contact</div>
+          <div style="font-size:12px;color:#555;line-height:1.8">Questions about Terms?<br><strong style="color:#7C3AED"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" >support@taskpay.app</a></strong></div>
+        </div>
+
+        <div style="background:#f5f0ff;border-radius:12px;padding:14px;text-align:center;margin-bottom:20px">
+          <div style="font-size:11px;color:#7C3AED;font-weight:600">By using TaskPay, you agree to these Terms of Service</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ SCRATCH SCREEN ══════ -->
+    <div id="scratchScreen">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(255,140,0,.15),transparent 70%);pointer-events:none"></div>
+
+      <div class="scratch-header">
+        <button class="scratch-back" onclick="closeScratchScreen()">←</button>
+        <div class="scratch-header-title">🎰 Scratch & Win</div>
+        <div class="scratch-coins-badge">🪙 <span id="scratchCoinBadge">0</span></div>
+      </div>
+
+      <div class="scratch-body">
+        <!-- SCRATCH CARD -->
+        <div class="scratch-card-game" id="scratchCardGame">
+          <div class="scratch-result" id="scratchResult">
+            <div class="scratch-result-icon">🪙</div>
+            <div class="scratch-result-amt" id="scratchAmt">???</div>
+            <div class="scratch-result-lbl">SCRATCH TO REVEAL</div>
+          </div>
+          <canvas class="scratch-canvas" id="scratchCanvas"></canvas>
+        </div>
+
+        <div class="scratch-info">
+          <div class="scratch-info-txt">👆 Scratch the card to reveal your prize!</div>
+          <div class="scratch-info-hint" id="scratchHint">Watch ad first to unlock scratch</div>
+        </div>
+
+        <button class="scratch-action-btn" id="scratchAdBtn" onclick="startScratchAd()">▶ Watch Test Ad &amp; Scratch!</button>
+      </div>
+
+      <!-- AD OVERLAY FOR SCRATCH -->
+      <div class="ad-overlay" id="scratchAdOverlay">
+        <div class="ad-box">
+          <div class="ad-icon">📺</div>
+          <div style="display:inline-block;background:#FFD700;color:#111;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:800;margin-bottom:10px">DEMO TEST AD</div><div class="ad-title">Watch Test Ad to Scratch!</div>
+          <div class="ad-sub">Watch a short ad to unlock<br>your scratch card. <strong style="color:#FFD700">5 seconds!</strong></div>
+          <button class="ad-timer" id="scratchAdTimerBtn" disabled>⏳ Wait <span id="scratchAdCountdown">5</span>s</button>
+          <div style="color:rgba(255,255,255,.3);font-size:9px">Ad revenue supports TaskPay 💙</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ══ EDIT PROFILE SCREEN ══ -->
+    <div id="editProfileScreen" style="position:absolute;inset:0;background:#f5f7fa;z-index:250;display:none;flex-direction:column;overflow:hidden">
+      <div style="background:linear-gradient(135deg,#1565C0,#7C3AED);padding:36px 16px 16px;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:10px">
+          <button onclick="document.getElementById('editProfileScreen').style.display='none'" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);border:none;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center">←</button>
+          <div style="color:#fff;font-size:17px;font-weight:800;flex:1;text-align:center">Edit Profile</div>
+          <div style="width:36px"></div>
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px">
+        <!-- Avatar -->
+        <div style="text-align:center;margin-bottom:24px">
+          <div id="editAvatar" style="width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#1565C0,#7C3AED);border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 10px;box-shadow:0 6px 20px rgba(21,101,192,.3);overflow:hidden"></div>
+          <button onclick="showToast('Photo update — coming soon!')" style="background:linear-gradient(135deg,#1565C0,#7C3AED);color:#fff;border:none;padding:8px 20px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;font-family:Poppins,sans-serif">📷 Change Photo</button>
+        </div>
+        <!-- Name Field -->
+        <div style="margin-bottom:16px">
+          <label style="font-size:12px;font-weight:700;color:#607d8b;display:block;margin-bottom:6px;letter-spacing:.5px">FULL NAME</label>
+          <input id="editNameInput" type="text" placeholder="Apna naam daalo" style="width:100%;padding:14px 16px;border-radius:12px;border:2px solid #e0e0e0;font-size:14px;font-family:Poppins,sans-serif;outline:none;background:#fff;transition:border-color .2s" onfocus="this.style.borderColor='#1565C0'" onblur="this.style.borderColor='#e0e0e0'">
+        </div>
+        <!-- Phone Field -->
+        <div style="margin-bottom:16px">
+          <label style="font-size:12px;font-weight:700;color:#607d8b;display:block;margin-bottom:6px;letter-spacing:.5px">PHONE NUMBER</label>
+          <input id="editPhoneInput" type="tel" placeholder="+91 XXXXX XXXXX" style="width:100%;padding:14px 16px;border-radius:12px;border:2px solid #e0e0e0;font-size:14px;font-family:Poppins,sans-serif;outline:none;background:#fff" onfocus="this.style.borderColor='#1565C0'" onblur="this.style.borderColor='#e0e0e0'">
+        </div>
+        <!-- Email (readonly) -->
+        <div style="margin-bottom:24px">
+          <label style="font-size:12px;font-weight:700;color:#607d8b;display:block;margin-bottom:6px;letter-spacing:.5px">EMAIL (Google)</label>
+          <input id="editEmailInput" type="email" readonly style="width:100%;padding:14px 16px;border-radius:12px;border:2px solid #e0e0e0;font-size:14px;font-family:Poppins,sans-serif;background:#f5f5f5;color:#90a4ae">
+        </div>
+        <button onclick="saveProfile()" style="width:100%;background:linear-gradient(135deg,#1565C0,#7C3AED);color:#fff;border:none;padding:16px;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:Poppins,sans-serif;box-shadow:0 6px 20px rgba(21,101,192,.3)">💾 Save Changes</button>
+      </div>
+    </div>
+
+    <!-- ══ PAYMENT METHODS SCREEN ══ -->
+    <div id="paymentScreen" style="position:absolute;inset:0;background:#f5f7fa;z-index:250;display:none;flex-direction:column;overflow:hidden">
+      <div style="background:linear-gradient(135deg,#27AE60,#4CAF50);padding:36px 16px 16px;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:10px">
+          <button onclick="document.getElementById('paymentScreen').style.display='none'" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);border:none;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center">←</button>
+          <div style="color:#fff;font-size:17px;font-weight:800;flex:1;text-align:center">Payment Methods</div>
+          <div style="width:36px"></div>
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px">
+        <!-- Current UPI -->
+        <div style="font-size:12px;font-weight:700;color:#607d8b;letter-spacing:.5px;margin-bottom:10px">SAVED UPI IDs</div>
+        <div id="savedUpiList">
+          <div style="background:#fff;border-radius:14px;padding:16px;text-align:center;color:#90a4ae;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+            <div style="font-size:32px;margin-bottom:8px">💳</div>
+            Koi UPI save nahi hai abhi
+          </div>
+        </div>
+        <!-- Add UPI -->
+        <div style="font-size:12px;font-weight:700;color:#607d8b;letter-spacing:.5px;margin:20px 0 10px">ADD NEW UPI ID</div>
+        <div style="background:#fff;border-radius:14px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+          <input id="newUpiInput" type="text" placeholder="yourname@paytm / @gpay / @upi" style="width:100%;padding:12px 14px;border-radius:10px;border:2px solid #e0e0e0;font-size:13px;font-family:Poppins,sans-serif;outline:none;margin-bottom:12px" onfocus="this.style.borderColor='#27AE60'" onblur="this.style.borderColor='#e0e0e0'">
+          <button onclick="saveUPI()" style="width:100%;background:linear-gradient(135deg,#27AE60,#4CAF50);color:#fff;border:none;padding:13px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:Poppins,sans-serif">+ Add UPI ID</button>
+        </div>
+        <div style="background:#FFF3E0;border-radius:12px;padding:12px 14px;margin-top:16px;border-left:3px solid #FF8C00">
+          <div style="font-size:11px;color:#e65100;font-weight:600">⚠️ UPI ID verify hogi withdrawal ke time. Galat UPI se payment fail ho sakti hai.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ NOTIFICATIONS SCREEN ══ -->
+    <div id="notifScreen" style="position:absolute;inset:0;background:#f5f7fa;z-index:250;display:none;flex-direction:column;overflow:hidden">
+      <div style="background:linear-gradient(135deg,#FF8C00,#FFA500);padding:36px 16px 16px;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:10px">
+          <button onclick="document.getElementById('notifScreen').style.display='none'" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);border:none;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center">←</button>
+          <div style="color:#fff;font-size:17px;font-weight:800;flex:1;text-align:center">Notifications</div>
+          <div style="width:36px"></div>
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px">
+        <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px">
+            <div><div style="font-size:13px;font-weight:700;color:#1a1a2e">Coin Rewards</div><div style="font-size:10px;color:#90a4ae;margin-top:2px">Push notification</div></div>
+            <div onclick="toggleSwitch(this)" style="width:44px;height:24px;background:#1565C0;border-radius:24px;position:relative;cursor:pointer;transition:.3s"><div style="position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.3s"></div></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;border-top:1px solid #f5f5f5">
+            <div><div style="font-size:13px;font-weight:700;color:#1a1a2e">Withdrawal Updates</div><div style="font-size:10px;color:#90a4ae;margin-top:2px">Push notification</div></div>
+            <div onclick="toggleSwitch(this)" style="width:44px;height:24px;background:#1565C0;border-radius:24px;position:relative;cursor:pointer;transition:.3s"><div style="position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.3s"></div></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;border-top:1px solid #f5f5f5">
+            <div><div style="font-size:13px;font-weight:700;color:#1a1a2e">New Offers</div><div style="font-size:10px;color:#90a4ae;margin-top:2px">Push notification</div></div>
+            <div onclick="toggleSwitch(this)" style="width:44px;height:24px;background:#1565C0;border-radius:24px;position:relative;cursor:pointer;transition:.3s"><div style="position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.3s"></div></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;border-top:1px solid #f5f5f5">
+            <div><div style="font-size:13px;font-weight:700;color:#1a1a2e">Spin Reminders</div><div style="font-size:10px;color:#90a4ae;margin-top:2px">Push notification</div></div>
+            <div onclick="toggleSwitch(this)" style="width:44px;height:24px;background:#ccc;border-radius:24px;position:relative;cursor:pointer;transition:.3s"><div style="position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.3s"></div></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;border-top:1px solid #f5f5f5">
+            <div><div style="font-size:13px;font-weight:700;color:#1a1a2e">Refer Bonus</div><div style="font-size:10px;color:#90a4ae;margin-top:2px">Push notification</div></div>
+            <div onclick="toggleSwitch(this)" style="width:44px;height:24px;background:#1565C0;border-radius:24px;position:relative;cursor:pointer;transition:.3s"><div style="position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.3s"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PRIVACY & SECURITY SCREEN ══ -->
+    <div id="privacySecScreen" style="position:absolute;inset:0;background:#f5f7fa;z-index:250;display:none;flex-direction:column;overflow:hidden">
+      <div style="background:linear-gradient(135deg,#7C3AED,#9C27B0);padding:36px 16px 16px;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:10px">
+          <button onclick="document.getElementById('privacySecScreen').style.display='none'" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);border:none;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center">←</button>
+          <div style="color:#fff;font-size:17px;font-weight:800;flex:1;text-align:center">Privacy & Security</div>
+          <div style="width:36px"></div>
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px">
+        <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:16px">
+          <div style="padding:14px 16px;border-bottom:1px solid #f5f5f5;display:flex;align-items:center;justify-content:space-between">
+            <div><div style="font-size:13px;font-weight:700">🔐 Two-Step Verification</div><div style="font-size:10px;color:#90a4ae;margin-top:2px">Extra security for your account</div></div>
+            <span style="background:#e8f5e9;color:#27AE60;font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px">ON</span>
+          </div>
+          <div style="padding:14px 16px;border-bottom:1px solid #f5f5f5;display:flex;align-items:center;justify-content:space-between">
+            <div><div style="font-size:13px;font-weight:700">📱 Login Devices</div><div style="font-size:10px;color:#90a4ae;margin-top:2px">1 active device</div></div>
+            <span style="color:#1565C0;font-size:12px;font-weight:700;cursor:pointer">View ›</span>
+          </div>
+          <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+            <div><div style="font-size:13px;font-weight:700">🗑️ Delete Account</div><div style="font-size:10px;color:#90a4ae;margin-top:2px">Permanently delete your data</div></div>
+            <span onclick="showToast('Contact support to delete account')" style="color:#FF3D00;font-size:12px;font-weight:700;cursor:pointer">Delete</span>
+          </div>
+        </div>
+        <div style="background:#fff;border-radius:14px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+          <div style="font-size:13px;font-weight:800;color:#1a1a2e;margin-bottom:12px">📄 Legal</div>
+          <div onclick="document.getElementById('privacyScreen').style.display='flex'" style="padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between">Privacy Policy <span style="color:#bdbdbd">›</span></div>
+          <div onclick="document.getElementById('termsScreen').style.display='flex'" style="padding:10px 0;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between">Terms of Service <span style="color:#bdbdbd">›</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ HELP & SUPPORT SCREEN ══ -->
+    <div id="helpScreen" style="position:absolute;inset:0;background:#f5f7fa;z-index:250;display:none;flex-direction:column;overflow:hidden">
+      <div style="background:linear-gradient(135deg,#00ACC1,#00BCD4);padding:36px 16px 16px;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:10px">
+          <button onclick="document.getElementById('helpScreen').style.display='none'" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);border:none;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center">←</button>
+          <div style="color:#fff;font-size:17px;font-weight:800;flex:1;text-align:center">Help & Support</div>
+          <div style="width:36px"></div>
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:20px">
+        <!-- Contact -->
+        <div style="background:linear-gradient(135deg,#1565C0,#7C3AED);border-radius:16px;padding:20px;text-align:center;margin-bottom:16px">
+          <div style="font-size:36px;margin-bottom:8px">🎧</div>
+          <div style="color:#fff;font-size:15px;font-weight:800;margin-bottom:4px">Need Help?</div>
+          <div style="color:rgba(255,255,255,.7);font-size:11px;margin-bottom:14px">Our team is here 24/7 for you</div>
+          <div style="display:flex;gap:8px;justify-content:center">
+            <button onclick="window.location.href='mailto:asik23178@gmail.com?subject=TaskPay Support'" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3);padding:10px 22px;border-radius:12px;font-size:12px;font-weight:700;cursor:pointer;font-family:Poppins,sans-serif">📧 Email Support</button>
+            <button onclick="window.location.href='/contact.html'" style="background:#FFD700;color:#1a1a2e;border:none;padding:10px 22px;border-radius:12px;font-size:12px;font-weight:700;cursor:pointer;font-family:Poppins,sans-serif">💬 Contact Us</button>
+          </div>
+        </div>
+        <!-- FAQ -->
+        <div style="font-size:12px;font-weight:700;color:#607d8b;letter-spacing:.5px;margin-bottom:10px">FREQUENTLY ASKED</div>
+        <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+          <div onclick="toggleFaq(this)" style="padding:14px 16px;border-bottom:1px solid #f5f5f5;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:12px;font-weight:700;color:#1a1a2e;flex:1;padding-right:8px">How to earn coins?</span>
+            <span style="color:#1565C0;font-weight:700;flex-shrink:0">+</span>
+          </div>
+          <div style="display:none;padding:0 16px 14px;font-size:11px;color:#607d8b;line-height:1.7;background:#f9f9ff;border-bottom:1px solid #f5f5f5">Spin wheel, watch ads, scratch cards, refer friends — sab se coins milte hain!</div>
+          <div onclick="toggleFaq(this)" style="padding:14px 16px;border-bottom:1px solid #f5f5f5;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:12px;font-weight:700;color:#1a1a2e;flex:1;padding-right:8px">When can I withdraw?</span>
+            <span style="color:#1565C0;font-weight:700;flex-shrink:0">+</span>
+          </div>
+          <div style="display:none;padding:0 16px 14px;font-size:11px;color:#607d8b;line-height:1.7;background:#f9f9ff;border-bottom:1px solid #f5f5f5">5000 coins = ₹50 hone par withdraw kar sakte ho via UPI.</div>
+          <div onclick="toggleFaq(this)" style="padding:14px 16px;border-bottom:1px solid #f5f5f5;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:12px;font-weight:700;color:#1a1a2e;flex:1;padding-right:8px">How long does withdrawal take?</span>
+            <span style="color:#1565C0;font-weight:700;flex-shrink:0">+</span>
+          </div>
+          <div style="display:none;padding:0 16px 14px;font-size:11px;color:#607d8b;line-height:1.7;background:#f9f9ff;border-bottom:1px solid #f5f5f5">1-2 business days mein process hoti hai.</div>
+          <div onclick="toggleFaq(this)" style="padding:14px 16px;border-bottom:1px solid #f5f5f5;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:12px;font-weight:700;color:#1a1a2e;flex:1;padding-right:8px">Referral bonus kab milega?</span>
+            <span style="color:#1565C0;font-weight:700;flex-shrink:0">+</span>
+          </div>
+          <div style="display:none;padding:0 16px 14px;font-size:11px;color:#607d8b;line-height:1.7;background:#f9f9ff;border-bottom:1px solid #f5f5f5">Jab aapka friend sign up kare aur app use kare tabhi milega.</div>
+          <div onclick="toggleFaq(this)" style="padding:14px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:12px;font-weight:700;color:#1a1a2e;flex:1;padding-right:8px">My coins are missing?</span>
+            <span style="color:#1565C0;font-weight:700;flex-shrink:0">+</span>
+          </div>
+          <div style="display:none;padding:0 16px 14px;font-size:11px;color:#607d8b;line-height:1.7;background:#f9f9ff">App refresh karo. Agar phir bhi na ho to support contact karo.</div>
+        </div>
+      </div>
+    </div>
+
+<!-- ══════ WATCH & EARN SCREEN ══════ -->
+<div id="watchScreen" style="position:absolute;inset:0;background:linear-gradient(160deg,#0a1628,#0d2137,#0a1628);z-index:50;display:none;flex-direction:column;align-items:center;overflow:hidden">
+
+  <div style="width:100%;display:flex;align-items:center;padding:36px 16px 12px;gap:10px;flex-shrink:0">
+    <button onclick="closeWatchScreen()" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center">←</button>
+    <div style="flex:1;color:#fff;font-size:18px;font-weight:800;text-align:center">▶️ Watch &amp; Earn</div>
+    <div style="background:rgba(255,215,0,.2);border:1.5px solid rgba(255,215,0,.5);border-radius:20px;padding:5px 12px;color:#FFD700;font-size:12px;font-weight:700">🪙 <span id="watchCoinBadge">0</span></div>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:0 20px 20px;width:100%">
+
+    <!-- AD CARD -->
+    <div style="background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);border-radius:24px;padding:28px 20px;text-align:center;width:100%">
+      <div style="font-size:56px;margin-bottom:12px">📺</div>
+      <div style="color:#fff;font-size:17px;font-weight:800;margin-bottom:6px">Ad Watch Karo</div>
+      <div style="color:rgba(255,255,255,.6);font-size:12px;line-height:1.6;margin-bottom:20px">Ad open hoga → 15 seconds baad<br>wapas aao → <strong style="color:#FFD700">+25 coins</strong> milenge!</div>
+
+      <!-- Timer / Status -->
+      <div id="watchStatus" style="margin-bottom:16px">
+        <div style="color:rgba(255,255,255,.4);font-size:11px">Aaj ke ads:</div>
+        <div style="color:#FFD700;font-size:20px;font-weight:900"><span id="watchCount">0</span>/10 watched</div>
+        <div style="height:6px;background:rgba(255,255,255,.1);border-radius:3px;margin:8px 0;overflow:hidden">
+          <div id="watchBar" style="height:100%;background:linear-gradient(90deg,#56CCF2,#2980d9);border-radius:3px;width:0%;transition:width .4s"></div>
+        </div>
+      </div>
+
+      <button id="watchAdBtn" onclick="startWatchAd()" style="width:100%;padding:16px;border-radius:18px;border:none;font-family:Poppins,sans-serif;font-weight:800;font-size:15px;cursor:pointer;background:linear-gradient(135deg,#56CCF2,#2980d9);color:#fff;box-shadow:0 6px 20px rgba(41,128,217,.4);letter-spacing:.5px">
+        ▶ Ad Dekho &amp; Coins Pao!
+      </button>
+    </div>
+
+    <!-- WAITING OVERLAY — user wapas aane ka wait -->
+    <div id="watchWaiting" style="display:none;background:rgba(255,215,0,.1);border:1.5px solid rgba(255,215,0,.3);border-radius:18px;padding:20px;text-align:center;width:100%">
+      <div style="font-size:36px;margin-bottom:8px">⏳</div>
+      <div style="color:#FFD700;font-size:14px;font-weight:800;margin-bottom:4px">Ad dekh lo!</div>
+      <div style="color:rgba(255,255,255,.6);font-size:11px;margin-bottom:16px"><span id="watchTimer">15</span> seconds baad coins milenge</div>
+      <button onclick="claimWatchCoins()" id="watchClaimBtn" disabled style="width:100%;padding:12px;border-radius:14px;border:none;font-family:Poppins,sans-serif;font-weight:800;font-size:14px;background:#555;color:#aaa;cursor:not-allowed">
+        🔒 <span id="watchClaimText">15s baad claim karo</span>
+      </button>
+    </div>
+
+    <!-- INFO -->
+    <div style="background:rgba(255,255,255,.05);border-radius:14px;padding:14px 16px;width:100%;text-align:center">
+      <div style="color:rgba(255,255,255,.5);font-size:10px;line-height:1.8">
+        💡 Har ad pe +25 coins • Max 10 ads/din<br>
+        Ad band mat karo — 15 sec baad claim karo
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- ══════ SPIN SCREEN ══════ -->
+    <div id="spinScreen">
+
+      <!-- Stars -->
+      <div class="spin-star" style="width:2px;height:2px;top:10%;left:15%;animation-delay:0s"></div>
+      <div class="spin-star" style="width:1.5px;height:1.5px;top:20%;left:80%;animation-delay:.5s"></div>
+      <div class="spin-star" style="width:2px;height:2px;top:40%;left:5%;animation-delay:1s"></div>
+      <div class="spin-star" style="width:1px;height:1px;top:60%;left:90%;animation-delay:1.5s"></div>
+      <div class="spin-star" style="width:2px;height:2px;top:75%;left:25%;animation-delay:.3s"></div>
+      <div class="spin-star" style="width:1.5px;height:1.5px;top:85%;left:70%;animation-delay:.8s"></div>
+
+      <!-- HEADER -->
+      <div class="spin-header">
+        <button class="spin-back" onclick="closeSpinScreen()">←</button>
+        <div class="spin-header-title">🎡 Spin & Win</div>
+        <div class="spin-coins-badge">🪙 <span id="spinCoinBadge">0</span></div>
+      </div>
+
+      <!-- TABS -->
+      <div class="spin-tabs" style="background:transparent;justify-content:center">
+        <div style="color:#fff;font-size:14px;font-weight:700;text-align:center;padding:4px 0">🆓 Free Daily Spins</div>
+        
+      </div>
+
+      <!-- FREE SPIN SECTION -->
+      <div id="freeSpinSection" class="spin-body">
+        <!-- Wheel -->
+        <div class="wheel-container">
+          <div class="wheel-pointer">📍</div>
+          <svg class="free-wheel" id="freeWheelSvg" viewBox="0 0 100 100">
+            <path d="M50,50 L50,2 A48,48 0,0,1 91.6,26 Z" fill="#FF6B6B"/>
+            <path d="M50,50 L91.6,26 A48,48 0,0,1 91.6,74 Z" fill="#FFD700"/>
+            <path d="M50,50 L91.6,74 A48,48 0,0,1 50,98 Z" fill="#4ECDC4"/>
+            <path d="M50,50 L50,98 A48,48 0,0,1 8.4,74 Z" fill="#45B7D1"/>
+            <path d="M50,50 L8.4,74 A48,48 0,0,1 8.4,26 Z" fill="#96CEB4"/>
+            <path d="M50,50 L8.4,26 A48,48 0,0,1 50,2 Z" fill="#FF8C69"/>
+            <text x="70" y="26" font-size="7" fill="white" font-weight="bold" font-family="Poppins" text-anchor="middle">+50</text>
+            <text x="85" y="54" font-size="7" fill="white" font-weight="bold" font-family="Poppins" text-anchor="middle">+100</text>
+            <text x="70" y="80" font-size="7" fill="white" font-weight="bold" font-family="Poppins" text-anchor="middle">+200</text>
+            <text x="30" y="80" font-size="7" fill="white" font-weight="bold" font-family="Poppins" text-anchor="middle">+75</text>
+            <text x="15" y="54" font-size="7" fill="white" font-weight="bold" font-family="Poppins" text-anchor="middle">+150</text>
+            <text x="30" y="26" font-size="7" fill="white" font-weight="bold" font-family="Poppins" text-anchor="middle">+300</text>
+            <line x1="50" y1="50" x2="50" y2="2" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+            <line x1="50" y1="50" x2="91.6" y2="26" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+            <line x1="50" y1="50" x2="91.6" y2="74" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+            <line x1="50" y1="50" x2="50" y2="98" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+            <line x1="50" y1="50" x2="8.4" y2="74" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+            <line x1="50" y1="50" x2="8.4" y2="26" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+            <circle cx="50" cy="50" r="6" fill="#FFD700" stroke="white" stroke-width="2"/>
+          </svg>
+        </div>
+
+        <!-- Spin Limit Bar -->
+        <div class="spin-limit">
+          <div style="margin-bottom:4px">
+            <div class="spin-limit-txt">Daily Spins Used</div>
+          </div>
+          <div class="spin-limit-bar">
+            <div class="spin-limit-fill" id="spinLimitFill" style="width:0%"></div>
+          </div>
+          <div class="spin-limit-count"><span id="spinsUsed">0</span>/10 spins used today</div>
+        </div>
+
+        <!-- Spin Button -->
+        <button class="spin-action-btn btn-spin-free" id="freeSpinBtn" onclick="startFreeSpinAd()">
+          ▶ Watch Test Ad &amp; Spin!
+        </button>
+      </div>
+
+      <!-- AD OVERLAY -->
+      <div class="ad-overlay" id="adOverlay">
+        <div class="ad-box">
+          <div class="ad-icon">📺</div>
+          <div style="display:inline-block;background:#FFD700;color:#111;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:800;margin-bottom:10px">DEMO TEST AD</div><div class="ad-title">Watch Test Ad to Spin!</div>
+          <div class="ad-sub">This is a <strong style="color:#FFD700">demo test ad</strong> for spin.<br>Wait only <strong style="color:#FFD700">5 seconds!</strong></div>
+          <button class="ad-timer" id="adTimerBtn" disabled>⏳ Wait <span id="adCountdown">5</span>s</button>
+          <div style="color:rgba(255,255,255,.3);font-size:9px">Ad revenue supports TaskPay 💙</div>
+        </div>
+      </div>
+
+    </div>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+
+// ══════════════════════════════
+//  WATCH & EARN — ADSTERRA
+// ══════════════════════════════
+const AD_URL = ''; // AdSense approval ke baad add hoga
+const WATCH_COINS = 25;
+const WATCH_DAILY_LIMIT = 10;
+const WATCH_WAIT_SECS = 15;
+const WATCH_KEY = 'watchDate_' + new Date().toDateString();
+
+function getWatchCount() {
+  return parseInt(localStorage.getItem(WATCH_KEY) || '0');
+}
+function addWatch() {
+  const c = getWatchCount() + 1;
+  localStorage.setItem(WATCH_KEY, c);
+  return c;
+}
+
+function openWatchEarn() {
+  document.getElementById('watchScreen').style.display = 'flex';
+  const badge = document.getElementById('watchCoinBadge');
+  if(badge) badge.textContent = coins;
+  updateWatchUI();
+}
+
+function closeWatchScreen() {
+  document.getElementById('watchScreen').style.display = 'none';
+  document.getElementById('watchWaiting').style.display = 'none';
+}
+
+function updateWatchUI() {
+  const count = getWatchCount();
+  const remaining = Math.max(0, WATCH_DAILY_LIMIT - count);
+  const pct = (count / WATCH_DAILY_LIMIT) * 100;
+  const countEl = document.getElementById('watchCount');
+  const barEl = document.getElementById('watchBar');
+  const btn = document.getElementById('watchAdBtn');
+  if(countEl) countEl.textContent = count;
+  if(barEl) barEl.style.width = pct + '%';
+  if(btn) {
+    if(remaining === 0) {
+      btn.disabled = true;
+      btn.style.background = '#555';
+      btn.textContent = '✅ Kal phir aao! (Daily limit)';
+    } else {
+      btn.disabled = false;
+      btn.style.background = 'linear-gradient(135deg,#56CCF2,#2980d9)';
+      btn.innerHTML = '▶ Ad Dekho &amp; Coins Pao! (' + remaining + ' baki)';
+    }
+  }
+}
+
+let watchTimerInterval = null;
+
+function startWatchAd() {
+  if(getWatchCount() >= WATCH_DAILY_LIMIT) {
+    showToast('❌ Aaj ke sab ads dekh liye! Kal aao.');
+    return;
+  }
+
+  // AdSense approval pending — temporarily disabled
+  if(!AD_URL) {
+    showToast('⏳ Ads jald hi available honge! Abhi Spin & Scratch try karo.');
+    return;
+  }
+
+  // Ad URL new tab mein kholo
+  window.open(AD_URL, '_blank');
+
+  // Waiting section dikhao
+  document.getElementById('watchAdBtn').style.display = 'none';
+  const waiting = document.getElementById('watchWaiting');
+  waiting.style.display = 'block';
+
+  // Timer shuru karo
+  let secs = WATCH_WAIT_SECS;
+  const timerEl = document.getElementById('watchTimer');
+  const claimBtn = document.getElementById('watchClaimBtn');
+  const claimText = document.getElementById('watchClaimText');
+  if(timerEl) timerEl.textContent = secs;
+
+  clearInterval(watchTimerInterval);
+  watchTimerInterval = setInterval(() => {
+    secs--;
+    if(timerEl) timerEl.textContent = secs;
+    if(secs <= 0) {
+      clearInterval(watchTimerInterval);
+      // Claim button active karo
+      if(claimBtn) {
+        claimBtn.disabled = false;
+        claimBtn.style.background = 'linear-gradient(135deg,#56CCF2,#2980d9)';
+        claimBtn.style.color = '#fff';
+        claimBtn.style.cursor = 'pointer';
+      }
+      if(claimText) claimText.textContent = '🎉 Claim ' + WATCH_COINS + ' Coins!';
+    }
+  }, 1000);
+}
+
+function claimWatchCoins() {
+  clearInterval(watchTimerInterval);
+  addWatch();
+  earnCoins(WATCH_COINS, '▶️ Watch & Earn');
+
+  // Reset UI
+  document.getElementById('watchWaiting').style.display = 'none';
+  document.getElementById('watchAdBtn').style.display = 'block';
+  updateWatchUI();
+
+  const badge = document.getElementById('watchCoinBadge');
+  if(badge) badge.textContent = coins;
+}
+let scratchReady = false, scratchDone = false, scratchPrize = 0;
+let isDrawing = false;
+
+function openScratchScreen() {
+  document.getElementById('scratchScreen').classList.add('show');
+  const badge = document.getElementById('scratchCoinBadge');
+  if(badge) badge.textContent = coins;
+  resetScratchCard();
+}
+function closeScratchScreen() {
+  document.getElementById('scratchScreen').classList.remove('show');
+}
+function resetScratchCard() {
+  scratchReady = false; scratchDone = false;
+  const adBtn = document.getElementById('scratchAdBtn');
+  adBtn.disabled = false;
+  adBtn.onclick = function(){ startScratchAd(); };
+  adBtn.innerHTML = '▶ Watch Test Ad &amp; Scratch!';
+  document.getElementById('scratchHint').textContent = 'Watch ad first to unlock scratch';
+  document.getElementById('scratchAmt').textContent = '???';
+  // Reset canvas
+  const canvas = document.getElementById('scratchCanvas');
+  const ctx = canvas.getContext('2d');
+  const card = document.getElementById('scratchCardGame');
+  canvas.width = card.offsetWidth || 260;
+  canvas.height = card.offsetHeight || 160;
+  ctx.fillStyle = '#bdbdbd';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  // Draw scratch pattern
+  ctx.fillStyle = 'rgba(180,180,180,0.8)';
+  for(let i=0;i<15;i++){
+    ctx.fillStyle = i%2===0?'#9e9e9e':'#bdbdbd';
+    ctx.fillRect(i*(canvas.width/15),0,canvas.width/15,canvas.height);
+  }
+  // Draw text on scratch layer
+  ctx.fillStyle = '#757575';
+  ctx.font = 'bold 16px Poppins, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('✨ SCRATCH HERE ✨', canvas.width/2, canvas.height/2);
+  canvas.style.display = 'block';
+}
+
+function startScratchAd() {
+  document.getElementById('scratchAdOverlay').classList.add('show');
+  const timerBtn = document.getElementById('scratchAdTimerBtn');
+  // Full reset of timer button
+  timerBtn.disabled = true;
+  timerBtn.className = 'ad-timer';
+  timerBtn.onclick = null;
+  timerBtn.innerHTML = '⏳ Wait <span id="scratchAdCountdown">5</span>s';
+  let secs = 5;
+
+  const interval = setInterval(() => {
+    secs--;
+    const el = document.getElementById('scratchAdCountdown');
+    if(el) el.textContent = secs;
+    if(secs <= 0) {
+      clearInterval(interval);
+      timerBtn.disabled = false;
+      timerBtn.className = 'ad-timer ready';
+      timerBtn.innerHTML = '🎰 Unlock Scratch Card!';
+      timerBtn.onclick = () => {
+        document.getElementById('scratchAdOverlay').classList.remove('show');
+        timerBtn.onclick = null;
+        unlockScratch();
+      };
+    }
+  }, 1000);
+}
+
+function unlockScratch() {
+  scratchReady = true;
+  const prizes = [10,25,50,75,100,5,30,20];
+  scratchPrize = prizes[Math.floor(Math.random()*prizes.length)];
+  document.getElementById('scratchAmt').textContent = '+' + scratchPrize + ' 🪙';
+  document.getElementById('scratchHint').textContent = '👆 Scratch the grey area!';
+  document.getElementById('scratchAdBtn').disabled = true;
+  document.getElementById('scratchAdBtn').textContent = '✅ Ad watched! Now scratch!';
+  setupScratchEvents();
+}
+
+function setupScratchEvents() {
+  const canvas = document.getElementById('scratchCanvas');
+  function scratch(x, y) {
+    if(!scratchReady || scratchDone) return;
+    const ctx = canvas.getContext('2d');
+    const rect = canvas.getBoundingClientRect();
+    const px = (x - rect.left) * (canvas.width/rect.width);
+    const py = (y - rect.top) * (canvas.height/rect.height);
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(px, py, 28, 0, Math.PI*2);
+    ctx.fill();
+    checkScratchComplete(ctx, canvas);
+  }
+  canvas.ontouchstart = (e) => { isDrawing=true; scratch(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); };
+  canvas.ontouchmove = (e) => { if(isDrawing) scratch(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); };
+  canvas.ontouchend = () => isDrawing=false;
+  canvas.onmousedown = (e) => { isDrawing=true; scratch(e.clientX, e.clientY); };
+  canvas.onmousemove = (e) => { if(isDrawing) scratch(e.clientX, e.clientY); };
+  canvas.onmouseup = () => isDrawing=false;
+}
+
+function checkScratchComplete(ctx, canvas) {
+  if(scratchDone) return;
+  const data = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+  let transparent = 0;
+  for(let i=3; i<data.length; i+=4) if(data[i]<128) transparent++;
+  const pct = transparent/(canvas.width*canvas.height);
+  if(pct > 0.45) {
+    scratchDone = true;
+    canvas.style.display = 'none'; // will be shown again on reset
+    // Add coins
+    coins += scratchPrize;
+    saveCoinsToFirebase(coins, scratchPrize);
+    updateAllCoins();
+    // Show popup
+    document.getElementById('popupIcon').textContent = '🎰';
+    document.getElementById('popupAmt').textContent = '+' + scratchPrize + ' COINS';
+    document.getElementById('popupMsg').textContent = 'Scratch Card Reward!';
+    document.getElementById('popup').classList.add('show');
+    // Auto reset after 1.5s for next scratch
+    setTimeout(() => { resetScratchCard(); }, 1500);
+  }
+}
+
+
+
+
+// ── PROFILE SECTION ──
+function updateProfileUI() {
+  const profileCoinsEl = document.getElementById('profileCoins');
+  const profileRefEl = document.getElementById('profileReferrals');
+  const profileEarnedEl = document.getElementById('profileEarned');
+  if(profileCoinsEl) profileCoinsEl.textContent = coins;
+  if(profileEarnedEl) profileEarnedEl.textContent = Math.floor(coins/100);
+  // Firebase se referral count lo
+  if(userRef) {
+    userRef.once('value').then(snap => {
+      const data = snap.val() || {};
+      if(profileRefEl) profileRefEl.textContent = data.referralCount || 0;
+    });
+  }
+}
+
+// ── WALLET SECTION ──
+function updateWalletUI() {
+  updateAllCoins(); // unified update
+}
+
+function openWithdrawScreen() {
+  if(coins < 5000) return;
+  const el = document.getElementById('withdrawScreen');
+  el.style.display = 'flex';
+  document.getElementById('availableRupees').textContent = Math.floor(coins/100);
+  document.getElementById('availableCoins').textContent = coins;
+}
+function closeWithdrawScreen() {
+  document.getElementById('withdrawScreen').style.display = 'none';
+}
+
+let otpSent = false;
+function sendOTP() {
+  const phone = document.getElementById('phoneInput').value.trim();
+  const upi = document.getElementById('upiInput').value.trim();
+  if(!upi) { showToast('❌ UPI ID daalo!'); return; }
+  if(!phone || phone.length < 10) { showToast('❌ Valid phone number daalo!'); return; }
+  document.getElementById('otpSection').style.display = 'block';
+  const btn = document.getElementById('sendOtpBtn');
+  btn.textContent = '✅ Request Ready!';
+  btn.style.background = '#90a4ae';
+  document.getElementById('withdrawSubmitBtn').style.display = 'block';
+  document.getElementById('otpInput').placeholder = 'Confirm karne ke liye koi bhi number daalo';
+  otpSent = true;
+  showToast('✅ UPI verify ho gaya!');
+}
+
+function submitWithdraw() {
+  const upi = document.getElementById('upiInput').value.trim();
+  const phone = document.getElementById('phoneInput').value.trim();
+  if(!otpSent) { showToast('❌ Pehle Verify karo!'); return; }
+  if(!upi) { showToast('❌ UPI ID daalo!'); return; }
+  if(!currentUser) { showToast('❌ Login karo pehle!'); return; }
+
+  const amount = Math.floor(coins/100);
+  const reqData = {
+    uid: currentUser.uid,
+    name: currentUser.displayName || 'User',
+    email: currentUser.email || '',
+    upi: upi,
+    phone: phone,
+    coins: coins,
+    amount: amount,
+    status: 'pending',
+    requestedAt: Date.now(),
+    date: new Date().toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'})
+  };
+
+  // Firebase mein save karo
+  db.ref('withdrawals').push(reqData).then(() => {
+    // User ke coins zero karo Firebase mein
+    if(userRef) userRef.update({ coins: 0 });
+    coins = 0;
+    updateAllCoins();
+
+    // Transaction history Firebase mein
+    if(userRef) userRef.child('transactions').push({
+      type: 'withdraw',
+      amount: '₹' + amount,
+      coins: reqData.coins,
+      upi: upi,
+      date: reqData.date,
+      status: 'pending'
+    });
+
+    closeWithdrawScreen();
+    document.getElementById('popupIcon').textContent = '💸';
+    document.getElementById('popupAmt').textContent = '₹' + amount + ' Request Ho Gaya!';
+    document.getElementById('popupMsg').textContent = '24-48 hrs mein UPI pe aayega ✅';
+    document.getElementById('popup').classList.add('show');
+    const pendingEl = document.getElementById('pendingWithdraw');
+    if(pendingEl) pendingEl.textContent = '₹' + amount;
+  }).catch(err => {
+    showToast('❌ Error: ' + err.message);
+  });
+
+  coins = 0;
+  updateAllCoins();
+  updateTxHistory();
+  closeWithdrawScreen();
+
+  // Show success popup
+  document.getElementById('popupIcon').textContent = '💸';
+  document.getElementById('popupAmt').textContent = '₹' + amount + ' Requested!';
+  document.getElementById('popupMsg').textContent = '24-48 hours mein UPI pe milega!';
+  document.getElementById('popup').classList.add('show');
+
+  // Update pending
+  const pendingEl = document.getElementById('pendingWithdraw');
+  if(pendingEl) pendingEl.textContent = '₹' + amount;
+}
+
+function updateTxHistory() {
+  const txEl = document.getElementById('txHistory');
+  if(!txEl) return;
+  if(!userRef) {
+    txEl.innerHTML = '<div style="text-align:center;padding:20px 0"><div style="font-size:36px;margin-bottom:8px">📭</div><div style="font-size:12px;color:#90a4ae">Login karke dekhein</div></div>';
+    return;
+  }
+  txEl.innerHTML = '<div style="text-align:center;padding:10px;color:#90a4ae;font-size:12px">Loading...</div>';
+  userRef.child('transactions').orderByChild('date').limitToLast(20).once('value').then(snap => {
+    const tx = [];
+    snap.forEach(child => tx.unshift(child.val()));
+    if(tx.length === 0) {
+      txEl.innerHTML = '<div style="text-align:center;padding:20px 0"><div style="font-size:36px;margin-bottom:8px">📭</div><div style="font-size:12px;color:#90a4ae">Koi transaction nahi abhi</div></div>';
+      return;
+    }
+    txEl.innerHTML = tx.map(t => `
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f5f5f5">
+        <div style="width:38px;height:38px;background:${t.type==='withdraw'?'linear-gradient(135deg,#F44336,#E91E63)':'linear-gradient(135deg,#27AE60,#4CAF50)'};border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">${t.type==='withdraw'?'💸':'🪙'}</div>
+        <div style="flex:1">
+          <div style="font-size:12px;font-weight:700;color:#1a1a2e">${t.type==='withdraw'?'Withdrawal Request':'Coins Earned'}</div>
+          <div style="font-size:10px;color:#90a4ae">${t.date||''} ${t.upi?'• '+t.upi:''}</div>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:800;color:${t.type==='withdraw'?'#F44336':'#27AE60'}">${t.amount}</div>
+          <div style="font-size:9px;color:#FFB300;font-weight:600;text-align:right">${t.status||'completed'}</div>
+        </div>
+      </div>
+    `).join('');
+  });
+}
+
+
+// ── PROFILE SCREEN FUNCTIONS ──
+
+function toggleSwitch(el) {
+  const isOn = el.style.background === 'rgb(21, 101, 192)' || el.style.background === '#1565C0';
+  el.style.background = isOn ? '#ccc' : '#1565C0';
+  const dot = el.querySelector('div');
+  if(dot) dot.style.left = isOn ? '3px' : '23px';
+}
+function toggleFaq(el) {
+  const answer = el.nextElementSibling;
+  if(!answer) return;
+  const isOpen = answer.style.display === 'block';
+  answer.style.display = isOpen ? 'none' : 'block';
+  const plus = el.querySelector('span:last-child');
+  if(plus) plus.textContent = isOpen ? '+' : '−';
+}
+
+function openEditProfile() {
+  const screen = document.getElementById('editProfileScreen');
+  screen.style.display = 'flex';
+  // Pre-fill fields
+  const nameEl = document.getElementById('editNameInput');
+  const emailEl = document.getElementById('editEmailInput');
+  const avatarEl = document.getElementById('editAvatar');
+  const pn = document.getElementById('profileName');
+  const pe = document.getElementById('profileEmail');
+  if(nameEl && pn) nameEl.value = pn.textContent || '';
+  if(emailEl && pe) emailEl.value = pe.textContent || '';
+  // Copy avatar
+  const src = document.getElementById('profilePic');
+  if(avatarEl && src) avatarEl.innerHTML = src.innerHTML || src.textContent || '👤';
+}
+
+function saveProfile() {
+  const name = document.getElementById('editNameInput')?.value?.trim();
+  if(!name){ showToast('Naam daalna zaroori hai!'); return; }
+  // Update profile name everywhere
+  const pn = document.getElementById('profileName');
+  const un = document.getElementById('userName');
+  if(pn) pn.textContent = name;
+  if(un) un.textContent = name.split(' ')[0] + '!';
+  localStorage.setItem('taskpay_name', name);
+  // Save phone
+  const phone = document.getElementById('editPhoneInput')?.value;
+  if(phone) localStorage.setItem('taskpay_phone', phone);
+  document.getElementById('editProfileScreen').style.display = 'none';
+  showToast('✅ Profile update ho gaya!');
+}
+
+function openPaymentScreen() {
+  const screen = document.getElementById('paymentScreen');
+  screen.style.display = 'flex';
+  renderSavedUPI();
+}
+
+function renderSavedUPI() {
+  const upiList = JSON.parse(localStorage.getItem('taskpay_upi_list') || '[]');
+  const el = document.getElementById('savedUpiList');
+  if(!el) return;
+  if(!upiList.length) {
+    el.innerHTML = '<div style="background:#fff;border-radius:14px;padding:16px;text-align:center;color:#90a4ae;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.06)"><div style="font-size:32px;margin-bottom:8px">💳</div>Koi UPI save nahi hai abhi</div>';
+    return;
+  }
+  el.innerHTML = upiList.map((upi,i) => `
+    <div style="background:#fff;border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+      <div style="width:40px;height:40px;background:linear-gradient(135deg,#27AE60,#4CAF50);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px">💳</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700">${upi}</div><div style="font-size:10px;color:#90a4ae">UPI ID</div></div>
+      <button onclick="deleteUPI(${i})" style="background:rgba(255,61,0,.1);border:none;color:#FF3D00;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:Poppins,sans-serif">Delete</button>
+    </div>`).join('');
+}
+
+function saveUPI() {
+  const input = document.getElementById('newUpiInput');
+  const upi = input?.value?.trim();
+  if(!upi || !upi.includes('@')) { showToast('Valid UPI ID daalo (eg: name@paytm)'); return; }
+  const list = JSON.parse(localStorage.getItem('taskpay_upi_list') || '[]');
+  if(list.includes(upi)) { showToast('Ye UPI already saved hai!'); return; }
+  list.push(upi);
+  localStorage.setItem('taskpay_upi_list', JSON.stringify(list));
+  if(input) input.value = '';
+  renderSavedUPI();
+  showToast('✅ UPI ID save ho gaya!');
+}
+
+function deleteUPI(idx) {
+  const list = JSON.parse(localStorage.getItem('taskpay_upi_list') || '[]');
+  list.splice(idx, 1);
+  localStorage.setItem('taskpay_upi_list', JSON.stringify(list));
+  renderSavedUPI();
+  showToast('UPI ID delete ho gaya');
+}
+
+function openNotifScreen() {
+  document.getElementById('notifScreen').style.display = 'flex';
+}
+
+function openPrivacySecScreen() {
+  document.getElementById('privacySecScreen').style.display = 'flex';
+}
+
+function openHelpScreen() {
+  document.getElementById('helpScreen').style.display = 'flex';
+}
+
+// ── REFER SECTION ──
+const APP_URL = window.location.origin;
+
+function generateReferCode(name) {
+  const prefix = (name||'USER').toUpperCase().replace(/[^A-Z]/g,'').substring(0,4);
+  const num = Math.floor(1000 + Math.random()*9000);
+  return prefix + num;
+}
+
+// Firebase data se referral section — DOM mein referCode Firebase se aata hai
+function initReferSection(user, data) {
+  if(!data) return;
+  const code = data.referCode || '----';
+  const codeEl = document.getElementById('userReferCode');
+  if(codeEl) codeEl.textContent = code;
+
+  const totalEl = document.getElementById('totalReferrals');
+  const earnedEl = document.getElementById('referEarned');
+  const rupeesEl = document.getElementById('referRupees');
+  if(totalEl) totalEl.textContent = data.referralCount || 0;
+  if(earnedEl) earnedEl.textContent = data.referralEarned || 0;
+  if(rupeesEl) rupeesEl.textContent = Math.floor((data.referralEarned||0)/100);
+
+  // Firebase se joined friends list
+  if(userRef) {
+    userRef.child('referredUsers').once('value').then(snap => {
+      const refs = [];
+      snap.forEach(child => refs.push(child.val()));
+      renderReferredList(refs);
+    });
+  } else {
+    renderReferredList([]);
+  }
+}
+
+function checkPendingReferral() { /* Firebase processReferral handles this */ }
+
+function getReferLink() {
+  const code = document.getElementById('userReferCode')?.textContent || '';
+  return APP_URL + '/?ref=' + code;
+}
+
+function getReferMsg() {
+  const code = document.getElementById('userReferCode')?.textContent || '';
+  const link = getReferLink();
+  return 'TaskPay se paise kamao! 💰\n\nSpin karo, Ads dekho, Scratch karo aur real money kamao! 🪙\n\nMera referral code use karo: ' + code + '\n\nJoin karo: ' + link + '\n\nSignup pe +250 coins FREE milenge!';
+}
+
+function copyReferLink() {
+  const msg = getReferMsg();
+  if(navigator.clipboard) {
+    navigator.clipboard.writeText(msg).then(() => showToast('✅ Link copied!'));
+  } else {
+    const code = document.getElementById('userReferCode')?.textContent || '';
+    showToast('✅ Code: ' + code);
+  }
+}
+
+function shareOn(platform) {
+  const msg = encodeURIComponent(getReferMsg());
+  const link = encodeURIComponent(getReferLink());
+  let url = '';
+  switch(platform) {
+    case 'whatsapp':  url = 'https://wa.me/?text=' + msg; break;
+    case 'telegram':  url = 'https://t.me/share/url?url=' + link + '&text=' + msg; break;
+    case 'facebook':  url = 'https://www.facebook.com/sharer/sharer.php?u=' + link; break;
+    case 'instagram':
+      copyReferLink();
+      showToast('📋 Link copied! Paste in Instagram');
+      return;
+    case 'other':
+      if(navigator.share) {
+        navigator.share({ title:'TaskPay - Earn Real Money!', text: getReferMsg(), url: getReferLink() });
+        return;
+      } else { copyReferLink(); return; }
+  }
+  if(url) window.open(url, '_blank');
+}
+
+function renderReferredList(refs) {
+  const list = document.getElementById('referredList');
+  if(!list) return;
+  if(!refs || refs.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:20px 0"><div style="font-size:36px;margin-bottom:8px">🤝</div><div style="font-size:12px;color:#90a4ae">Abhi koi friend join nahi kiya</div><div style="font-size:11px;color:#bdbdbd;margin-top:4px">Link share karo earning shuru karo!</div></div>';
+    return;
+  }
+  list.innerHTML = refs.map((r,i) => `
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;${i<refs.length-1?'border-bottom:1px solid #f5f5f5':''}">
+      <div style="width:38px;height:38px;background:linear-gradient(135deg,#1565C0,#7C3AED);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;flex-shrink:0">${(r.name||'U').charAt(0).toUpperCase()}</div>
+      <div style="flex:1"><div style="font-size:12px;font-weight:700;color:#1a1a2e">${r.name||'User'}</div><div style="font-size:10px;color:#90a4ae">${r.date||''}</div></div>
+      <div style="color:#27AE60;font-weight:800;font-size:12px">+500 🪙</div>
+    </div>
+  `).join('');
+}
+function generateReferCode(name) {
+  const prefix = (name || 'USER').toUpperCase().replace(/[^A-Z]/g,'').substring(0,4);
+  const num = Math.floor(1000 + Math.random()*9000);
+  return prefix + num;
+}
+
+function copyReferCode() {
+  copyReferLink();
+}
+
+function shareReferCode() {
+  if(navigator.share) {
+    navigator.share({ title:'TaskPay - Earn Coins!', text: getReferMsg(), url: getReferLink() });
+  } else {
+    copyReferLink();
+  }
+}
+
+function showToast(msg) {
+  let toast = document.getElementById('toast');
+  if(!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:10px 20px;border-radius:20px;font-size:12px;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;white-space:nowrap';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.style.opacity = '1';
+  setTimeout(() => toast.style.opacity = '0', 2000);
+}
+
+// ── APPS TABS ──
+function switchAppsTab(tab) {
+  const appsBtn = document.getElementById('appsTabBtn');
+  const surveyBtn = document.getElementById('surveyTabBtn');
+  const appsContent = document.getElementById('appsTabContent');
+  const surveyContent = document.getElementById('surveyTabContent');
+  if(tab==='apps') {
+    appsBtn.style.cssText='flex:1;padding:9px;border:none;border-radius:10px;background:#1565C0;color:#fff;font-family:Poppins,sans-serif;font-size:12px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(21,101,192,.4)';
+    surveyBtn.style.cssText='flex:1;padding:9px;border:none;border-radius:10px;background:transparent;color:#9e9e9e;font-family:Poppins,sans-serif;font-size:12px;font-weight:600;cursor:pointer';
+    appsContent.style.display='flex';
+    surveyContent.style.display='none';
+  } else {
+    surveyBtn.style.cssText='flex:1;padding:9px;border:none;border-radius:10px;background:#7C3AED;color:#fff;font-family:Poppins,sans-serif;font-size:12px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(124,58,237,.4)';
+    appsBtn.style.cssText='flex:1;padding:9px;border:none;border-radius:10px;background:transparent;color:#9e9e9e;font-family:Poppins,sans-serif;font-size:12px;font-weight:600;cursor:pointer';
+    appsContent.style.display='none';
+    surveyContent.style.display='flex';
+    // ── Load surveys from Firebase when tab opens ──
+    loadSurveys();
+  }
+}
+
+// ── OFFERWALL — Firebase Only ──
+// CPAGrip removed. Offers are managed via Firebase DB (offers/ path)
+// Admin panel se offer add karo → yahan automatic dikhega
+
+// ── SPIN SCREEN LOGIC ──
+
+function resetSpinLimit() {
+  // Clear all spin keys from localStorage
+  Object.keys(localStorage).forEach(key => {
+    if(key.startsWith('spinDate_')) localStorage.removeItem(key);
+  });
+  updateSpinUI();
+  showToast('✅ Spin limit reset! 10 spins ready!');
+}
+
+let freeAngle = 0, premAngle = 0, isSpinning = false;
+const DAILY_LIMIT = 10;
+const TODAY_KEY = 'spinDate_' + new Date().toDateString();
+
+function getSpinsUsed() {
+  const saved = localStorage.getItem(TODAY_KEY);
+  return saved ? parseInt(saved) : 0;
+}
+function addSpin() {
+  const used = getSpinsUsed() + 1;
+  localStorage.setItem(TODAY_KEY, used);
+  return used;
+}
+
+function openSpinScreen() {
+  document.getElementById('spinScreen').classList.add('show');
+  updateSpinUI();
+  const badge = document.getElementById('spinCoinBadge');
+  if(badge) badge.textContent = coins;
+}
+function closeSpinScreen() {
+  document.getElementById('spinScreen').classList.remove('show');
+}
+function switchSpinTab(tab) {
+  document.getElementById('freeTab').classList.toggle('active', tab==='free');
+  document.getElementById('premiumTab').classList.toggle('active', tab==='premium');
+  document.getElementById('freeSpinSection').style.display = tab==='free'?'flex':'none';
+  document.getElementById('premiumSpinSection').style.display = tab==='premium'?'flex':'none';
+}
+
+function updateSpinUI() {
+  const used = getSpinsUsed();
+  const remaining = Math.max(0, DAILY_LIMIT - used);
+  document.getElementById('spinsUsed').textContent = used;
+  document.getElementById('spinLimitFill').style.width = (used/DAILY_LIMIT*100) + '%';
+  const btn = document.getElementById('freeSpinBtn');
+  if(remaining === 0) {
+    btn.disabled = true;
+    btn.textContent = '✅ Daily Limit Reached!';
+  } else {
+    btn.disabled = false;
+    btn.innerHTML = '▶ Watch Test Ad &amp; Spin! (' + remaining + ' left)';
+  }
+}
+
+function startFreeSpinAd() {
+  if(getSpinsUsed() >= DAILY_LIMIT) return;
+  document.getElementById('adOverlay').classList.add('show');
+  const timerBtn = document.getElementById('adTimerBtn');
+  // Reset button state
+  timerBtn.disabled = true;
+  timerBtn.className = 'ad-timer';
+  timerBtn.onclick = null;
+  timerBtn.innerHTML = '⏳ Wait <span id="adCountdown">5</span>s';
+  let secs = 5;
+  
+  const interval = setInterval(() => {
+    secs--;
+    const cd = document.getElementById('adCountdown');
+    if(cd) cd.textContent = secs;
+    if(secs <= 0) {
+      clearInterval(interval);
+      timerBtn.disabled = false;
+      timerBtn.className = 'ad-timer ready';
+      timerBtn.innerHTML = '🎡 Claim & Spin Now!';
+      timerBtn.onclick = () => {
+        document.getElementById('adOverlay').classList.remove('show');
+        timerBtn.onclick = null;
+        doFreeSpinWheel();
+      };
+    }
+  }, 1000);
+}
+
+function doFreeSpinWheel() {
+  if(isSpinning) return;
+  isSpinning = true;
+  addSpin();
+  updateSpinUI();
+
+  // Prizes mapped to 6 wheel segments (each = 60 degrees)
+  // Wheel segments order: +50, +100, +200, +75, +150, +300
+  const prizes =   [50,  100,  200,  75,  150, 300];
+  const segAngles = [0,   60,  120,  180, 240, 300]; // start angle of each segment
+
+  // Pick prize FIRST, then calculate angle to land on it
+  const prizeIdx = Math.floor(Math.random() * 6);
+  const won = prizes[prizeIdx];
+
+  // Target angle: land in middle of that segment
+  const targetSeg = segAngles[prizeIdx] + 30; // middle of segment
+  const fullSpins = (Math.floor(Math.random()*4) + 5) * 360; // 5-8 full rotations
+  // Calculate total rotation to land on correct segment
+  const currentMod = freeAngle % 360;
+  const needed = (360 - currentMod + (360 - targetSeg)) % 360;
+  freeAngle += fullSpins + needed;
+
+  const wheel = document.getElementById('freeWheelSvg');
+  wheel.style.transform = `rotate(${freeAngle}deg)`;
+
+  setTimeout(() => {
+    isSpinning = false;
+    coins += won;
+    saveCoinsToFirebase(coins, won);
+    updateAllCoins();
+    // Reset ad button for next spin
+    const freeBtn = document.getElementById('freeSpinBtn');
+    const used = getSpinsUsed();
+    const remaining = Math.max(0, DAILY_LIMIT - used);
+    if(remaining > 0) {
+      freeBtn.disabled = false;
+      freeBtn.innerHTML = '▶ Watch Test Ad &amp; Spin! (' + remaining + ' left)';
+    }
+    // Show win popup with EXACT amount wheel landed on
+    document.getElementById('popupIcon').textContent = '🎡';
+    document.getElementById('popupAmt').textContent = '+' + won + ' COINS';
+    document.getElementById('popupMsg').textContent = 'Spin & Win Reward!';
+    document.getElementById('popup').classList.add('show');
+  }, 4200);
+}
+
+// Stars
+const splash=document.getElementById('splash');
+const styleEl=document.createElement('style');
+styleEl.textContent='@keyframes twinkle{0%,100%{opacity:.15;transform:scale(1)}50%{opacity:1;transform:scale(1.5)}}';
+document.head.appendChild(styleEl);
+for(let i=0;i<55;i++){
+  const s=document.createElement('div');
+  const sz=Math.random()*2.5+.5;
+  s.style.cssText=`position:absolute;border-radius:50%;background:white;width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation:twinkle ${Math.random()*3+2}s ease-in-out infinite;animation-delay:${Math.random()*4}s;`;
+  splash.appendChild(s);
+}
+
+let coins = parseInt(localStorage.getItem('taskpay_coins') || '0');
+function updateAllCoins() {
+  // Save to localStorage first
+  localStorage.setItem('taskpay_coins', coins);
+  
+  // Update ALL coin displays everywhere
+  var allIds = {
+    'coinCount': coins,
+    'spinCoinBadge': coins,
+    'scratchCoinBadge': coins,
+    'walletCoins': coins,
+    'profileCoins': coins,
+    'totalEarned': coins,
+  };
+  Object.keys(allIds).forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el) el.textContent = allIds[id];
+  });
+
+  // Rupees value
+  var rupees = Math.floor(coins / 100);
+  var rupeesDecimal = (coins / 100).toFixed(2);
+  var wr = document.getElementById('walletRupees');
+  if(wr) wr.textContent = rupeesDecimal;
+  var pe = document.getElementById('profileEarned');
+  if(pe) pe.textContent = rupees;
+
+  // Withdrawal progress
+  var capped = Math.min(coins, 5000);
+  var pct = Math.min((coins / 5000) * 100, 100);
+  var wp = document.getElementById('withdrawProgress');
+  if(wp) wp.textContent = capped;
+  var wpb = document.getElementById('withdrawProgressBar');
+  if(wpb) wpb.style.width = pct + '%';
+
+  // Withdraw button
+  var wh = document.getElementById('withdrawHint');
+  var wb = document.getElementById('withdrawBtn');
+  if(coins >= 5000) {
+    if(wh) wh.textContent = '🎉 Aap withdraw kar sakte ho!';
+    if(wb) {
+      wb.disabled = false;
+      wb.innerHTML = '💸 Withdraw ₹' + rupees + ' via UPI';
+      wb.style.background = 'linear-gradient(135deg,#27AE60,#4CAF50)';
+      wb.style.color = '#fff';
+    }
+  } else {
+    var need = 5000 - coins;
+    if(wh) wh.textContent = need + ' more coins needed for withdrawal';
+    if(wb) {
+      wb.disabled = true;
+      wb.innerHTML = '🔒 ' + need + ' more coins needed';
+    }
+  }
+}
+
+function earnCoins(amt,label){
+  coins += amt;
+  updateAllCoins();
+  document.getElementById('popupIcon').textContent='🎉';
+  document.getElementById('popupAmt').textContent=`+${amt} COINS`;
+  document.getElementById('popupMsg').textContent=label;
+  document.getElementById('popup').classList.add('show');
+}
+function closePopup(){document.getElementById('popup').classList.remove('show')}
+
+let spinning=false,angle=0;
+function doSpin_old(){
+  if(spinning)return;
+  spinning=true;
+  // wheel removed - image used instead
+  angle+=(Math.floor(Math.random()*4)+4)*360+Math.random()*360;
+  // spin animation via image
+  setTimeout(()=>{
+    spinning=false;
+    const prizes=[50,100,200,75,150,300];
+    const won=prizes[Math.floor(Math.random()*prizes.length)];
+    coins+=won;
+    const cc2=document.getElementById('coinCount');
+    const wc2=document.getElementById('walletCoins');
+    const pc2=document.getElementById('profileCoins');
+    if(cc2)cc2.textContent=coins;
+    if(wc2)wc2.textContent=`Balance: ${coins} Coins`;
+    if(pc2)pc2.textContent=coins;
+    document.getElementById('popupIcon').textContent='🎡';
+    document.getElementById('popupAmt').textContent=`+${won} COINS`;
+    document.getElementById('popupMsg').textContent='Wheel Spin Reward!';
+    document.getElementById('popup').classList.add('show');
+  },3200);
+}
+
+function switchTab(btn,e){if(e)e.preventDefault();
+  document.querySelectorAll('.nav-btn').forEach(b=>{
+    b.classList.remove('active');
+    const na=b.querySelector('.na');
+    if(na)na.remove();
+  });
+  btn.classList.add('active');
+  if(btn.dataset.tab==='home'){
+    const na=document.createElement('span');
+    na.className='na';na.textContent='ACTIVE';
+    btn.appendChild(na);
+  }
+  ['home','apps','refer','wallet','profile'].forEach(t=>{
+    const el=document.getElementById(t+'Content');
+    if(!el)return;
+    const isActive = t===btn.dataset.tab;
+    el.style.display=isActive?'flex':'none';
+    if(isActive && t==='wallet'){ updateWalletUI(); updateTxHistory(); }
+    if(isActive && t==='profile'){ updateProfileUI(); }
+  });
+}
+['apps','refer','wallet','profile'].forEach(t=>{
+  const el=document.getElementById(t+'Content');
+  if(el)el.style.display='none';
+});
+</script>
+
+<script>
+// ══════════════════════════════════════════
+//  FIREBASE AUTH + DATABASE — REAL LOGIN
+// ══════════════════════════════════════════
+
+let currentUser = null;
+let userRef = null;
+
+// ── IN-APP BROWSER DETECT & FIX ──
+function isInAppBrowser() {
+  const ua = navigator.userAgent || '';
+  return (
+    ua.includes('FBAN') ||        // Facebook
+    ua.includes('FBAV') ||        // Facebook
+    ua.includes('Instagram') ||   // Instagram
+    ua.includes('WhatsApp') ||    // WhatsApp
+    ua.includes('Snapchat') ||    // Snapchat
+    ua.includes('TwitterAndroid') || // Twitter
+    ua.includes('MicroMessenger')   // WeChat
+    // Note: Android WebView check hataya — Chrome pe false trigger karta tha
+  );
+}
+
+function openInChrome() {
+  const url = window.location.href;
+  const chromeUrl = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;end';
+  window.location.href = chromeUrl;
+  setTimeout(() => { window.open(url, '_blank'); }, 1500);
+}
+
+// Page load hote hi check karo
+(function() {
+  if(isInAppBrowser()) {
+    const warning = document.getElementById('inAppWarning');
+    if(warning) warning.style.display = 'flex';
+    const btn = document.getElementById('googleBtn');
+    if(btn) {
+      btn.style.opacity = '0.4';
+      btn.style.pointerEvents = 'none';
+    }
+  }
+})();
+
+// ── Google Login ──
+function loginWithGoogle() {
+  const btn = document.getElementById('googleBtn');
+  if(!btn) return;
+
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spin-loader"></div><span style="margin-left:8px">Signing in...</span>';
+
+  // Referral code save karo redirect se pehle
+  const urlParams = new URLSearchParams(window.location.search);
+  const refCode = urlParams.get('ref');
+  if(refCode) localStorage.setItem('pendingRef', refCode);
+
+  const googleIcon = '<svg width="22" height="22" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Sign in with Google';
+
+  auth.signInWithPopup(provider)
+    .then(result => {
+      console.log('Popup login success:', result.user.uid);
+    })
+    .catch(err => {
+      console.error('Popup error:', err.code, err.message);
+      if(err.code === 'auth/popup-closed-by-user') {
+        // User ne khud close kiya — koi action nahi
+        btn.disabled = false;
+        btn.innerHTML = googleIcon;
+      } else if(err.code === 'auth/popup-blocked') {
+        showToast('⚠️ Popup blocked! Redirect se try ho raha hai...');
+        auth.signInWithRedirect(provider);
+      } else {
+        btn.disabled = false;
+        btn.innerHTML = googleIcon;
+        showToast('❌ Login failed: ' + (err.code || err.message));
+      }
+    });
+}
+
+auth.onAuthStateChanged(user => {
+  if(user) {
+    currentUser = user;
+    userRef = db.ref('users/' + user.uid);
+    loadUserData(user);
+  } else {
+    currentUser = null;
+    userRef = null;
+    showSplash();
+  }
+});
+
+// ── Load user data from Firebase ──
+function loadUserData(user) {
+  userRef.once('value').then(snap => {
+    let data = snap.val();
+    const isNewUser = !data;
+
+    if(isNewUser) {
+      // Naya user — first time setup
+      const firstName = user.displayName ? user.displayName.split(' ')[0] : 'User';
+      const referCode = firstName.toUpperCase().replace(/[^A-Z]/g,'').slice(0,4) + Math.floor(1000 + Math.random()*9000);
+      // Device fingerprint — 1 device 1 account ke liye
+      const deviceId = localStorage.getItem('taskpay_device_id') || (Date.now().toString(36) + Math.random().toString(36).substr(2));
+      localStorage.setItem('taskpay_device_id', deviceId);
+
+      data = {
+        name: user.displayName || 'User',
+        email: user.email || '',
+        photo: user.photoURL || '',
+        coins: 0,
+        totalEarned: 0,
+        referCode: referCode,
+        referredBy: null,
+        referralCount: 0,
+        referralEarned: 0,
+        joinedAt: Date.now(),
+        deviceId: deviceId
+      };
+      userRef.set(data).then(() => {
+        // Naya user set hone ke BAAD referral check karo
+        const urlParams = new URLSearchParams(window.location.search);
+        const refCode = urlParams.get('ref') || localStorage.getItem('pendingRef');
+        localStorage.removeItem('pendingRef');
+        if(refCode && refCode !== data.referCode) {
+          processReferral(refCode, data, user.uid);
+        }
+      });
+    } else {
+      // Purana user — referral already apply hua hai check karo
+      if(!data.referredBy) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const refCode = urlParams.get('ref') || localStorage.getItem('pendingRef');
+        localStorage.removeItem('pendingRef');
+        if(refCode && refCode !== data.referCode) {
+          processReferral(refCode, data, user.uid);
+        }
+      }
+    }
+
+    coins = data.coins || 0;
+    showDashboard(user, data);
+
+    // Real-time coins sync
+    userRef.child('coins').on('value', snap => {
+      const newCoins = snap.val() || 0;
+      coins = newCoins;
+      updateAllCoins();
+    });
+
+  }).catch(err => console.error('Data load error:', err));
+}
+
+// ── Process Referral ──
+function processReferral(refCode, myData, myUid) {
+  db.ref('users').orderByChild('referCode').equalTo(refCode).once('value').then(snap => {
+    if(!snap.exists()) return;
+    snap.forEach(child => {
+      const referrerId = child.key;
+      if(referrerId === myUid) return; // apna code nahi chalega
+
+      const joinDate = new Date().toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'});
+
+      // Referrer ko +500 coins + stats update
+      db.ref('users/' + referrerId + '/coins').transaction(c => (c||0) + 500);
+      db.ref('users/' + referrerId + '/referralCount').transaction(c => (c||0) + 1);
+      db.ref('users/' + referrerId + '/referralEarned').transaction(c => (c||0) + 500);
+      db.ref('users/' + referrerId + '/totalEarned').transaction(c => (c||0) + 500);
+
+      // Referrer ke referredUsers list mein naya user add karo
+      db.ref('users/' + referrerId + '/referredUsers').push({
+        name: myData.name || 'User',
+        uid: myUid,
+        date: joinDate
+      });
+
+      // New user ko +250 coins
+      db.ref('users/' + myUid + '/coins').transaction(c => (c||0) + 250);
+      db.ref('users/' + myUid + '/totalEarned').transaction(c => (c||0) + 250);
+      db.ref('users/' + myUid).update({ referredBy: referrerId });
+
+      // New user ko popup dikhao
+      setTimeout(() => {
+        document.getElementById('popupIcon').textContent = '🎁';
+        document.getElementById('popupAmt').textContent = '+250 COINS';
+        document.getElementById('popupMsg').textContent = 'Welcome Referral Bonus!';
+        document.getElementById('popup').classList.add('show');
+      }, 1500);
+
+      showToast('🎉 Referral bonus! +250 coins mile!');
+    });
+  });
+}
+
+// ── Save coins to Firebase ──
+function saveCoinsToFirebase(newCoins, earnedAmt) {
+  if(!userRef) return;
+  userRef.update({
+    coins: newCoins,
+    totalEarned: firebase.database.ServerValue.increment(earnedAmt)
+  });
+}
+
+// ── Show Dashboard ──
+function showDashboard(user, data) {
+  const splash = document.getElementById('splash');
+  const dash = document.getElementById('dashboard');
+  // Load dynamic offers for Apps tab
+  setTimeout(() => loadAppsTabData(), 1200);
+  if(splash) splash.style.display = 'none';
+  if(dash) { dash.style.display = 'flex'; setTimeout(() => dash.style.opacity = '1', 50); }
+
+  const firstName = (data.name || user.displayName || 'User').split(' ')[0];
+  const un = document.getElementById('userName');
+  if(un) un.textContent = firstName + '!';
+
+  const av = document.getElementById('userAvatar');
+  if(av) {
+    if(data.photo || user.photoURL) {
+      av.innerHTML = `<img src="${data.photo||user.photoURL}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`;
+    } else {
+      av.textContent = firstName[0].toUpperCase();
+    }
+  }
+
+  const pn = document.getElementById('profileName');
+  const pe = document.getElementById('profileEmail');
+  if(pn) pn.textContent = data.name || user.displayName || 'User';
+  if(pe) pe.textContent = data.email || user.email || '';
+
+  updateAllCoins();
+  if(typeof initReferSection === 'function') initReferSection(user, data);
+}
+
+// ── Show Splash ──
+function showSplash() {
+  const dash = document.getElementById('dashboard');
+  if(dash) { dash.style.opacity = '0'; dash.style.display = 'none'; }
+  const splash = document.getElementById('splash');
+  if(splash) splash.style.display = 'flex';
+  const btn = document.getElementById('googleBtn');
+  if(btn) {
+    btn.disabled = false;
+    btn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24">
+      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+    </svg> Sign in with Google`;
+  }
+  coins = 0;
+}
+
+// ── Sign Out ──
+function doSignOut() {
+  if(userRef) userRef.child('coins').off();
+  auth.signOut().catch(err => console.error(err));
+}
+
+// ── Override earnCoins to also save to Firebase ──
+const _origEarnCoins = typeof earnCoins === 'function' ? earnCoins : null;
+function earnCoins(amt, label) {
+  coins += amt;
+  saveCoinsToFirebase(coins, amt);
+  updateAllCoins();
+  document.getElementById('popupIcon').textContent = '🎉';
+  document.getElementById('popupAmt').textContent = '+' + amt + ' COINS';
+  document.getElementById('popupMsg').textContent = label;
+  document.getElementById('popup').classList.add('show');
+}
+</script>
+<!-- ══ PWA INSTALL MODAL ══ -->
+<div id="installModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);align-items:flex-end;justify-content:center">
+  <div style="background:#fff;border-radius:24px 24px 0 0;padding:28px 22px 36px;width:100%;max-width:480px;animation:slideUp .35s ease">
+    <div style="width:40px;height:4px;background:#e0e0e0;border-radius:2px;margin:0 auto 20px"></div>
+    <div style="text-align:center;margin-bottom:20px">
+      <img src="/icon-192.png" style="width:64px;height:64px;border-radius:18px;box-shadow:0 4px 16px rgba(0,0,0,.15);margin-bottom:12px">
+      <div style="font-size:18px;font-weight:900;color:#1a1a2e">TaskPay Home Screen Pe Add Karo!</div>
+      <div style="font-size:12px;color:#90a4ae;margin-top:6px;line-height:1.6">App jaisi speed, offline support aur<br>best experience ke liye install karo 🚀</div>
+    </div>
+    <!-- Android / Chrome install button -->
+    <div id="installAndroidSection">
+      <button onclick="triggerInstall()" style="width:100%;background:linear-gradient(135deg,#1565C0,#7C3AED);color:#fff;border:none;padding:14px;border-radius:16px;font-family:Poppins,sans-serif;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 6px 20px rgba(21,101,192,.4);margin-bottom:10px">
+        📲 Add to Home Screen
+      </button>
+    </div>
+    <!-- iOS Safari instructions -->
+    <div id="installIOSSection" style="display:none;background:#f5f7fa;border-radius:14px;padding:14px;margin-bottom:10px">
+      <div style="font-size:12px;font-weight:800;color:#1a1a2e;margin-bottom:10px">📱 iOS mein kaise install karein:</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:24px;height:24px;background:#1565C0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;flex-shrink:0">1</div>
+          <div style="font-size:12px;color:#555">Safari mein neeche <strong>Share (↑)</strong> button dabao</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:24px;height:24px;background:#1565C0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;flex-shrink:0">2</div>
+          <div style="font-size:12px;color:#555"><strong>"Add to Home Screen"</strong> choose karo</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:24px;height:24px;background:#1565C0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;flex-shrink:0">3</div>
+          <div style="font-size:12px;color:#555">Upar right mein <strong>"Add"</strong> dabao ✅</div>
+        </div>
+      </div>
+    </div>
+    <button onclick="document.getElementById('installModal').style.display='none';localStorage.setItem('installDismissed','1')" style="width:100%;background:transparent;border:none;color:#90a4ae;font-family:Poppins,sans-serif;font-size:12px;cursor:pointer;padding:8px">
+      Baad mein karna hai
+    </button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+//  DYNAMIC OFFERS + SURVEYS — Firebase
+//  Admin panel se offers/surveys add karo:
+//  DB path: offers/{id} and surveys/{id}
+//  Required fields: title, coins, desc, url, active:true
+// ══════════════════════════════════════
+
+function loadAppsTabData() {
+  loadFeaturedOffers();
+  // Survey tab loads lazily when clicked
+}
+
+// ── Load Featured Offers (Apps tab) — Firebase only ──
+// Firebase structure: { status:"active", amount:500, description:"...", link:"...", title:"...", image_url:"..." }
+function loadFeaturedOffers() {
+  const loading = document.getElementById('offersLoading');
+  const empty   = document.getElementById('offersEmpty');
+  const section = document.getElementById('featuredOffersSection');
+  const list    = document.getElementById('featuredOffersList');
+
+  if (loading) loading.style.display = 'flex';
+  if (empty)   empty.style.display   = 'none';
+  if (section) section.style.display = 'none';
+
+  db.ref('offers').orderByChild('status').equalTo('active').once('value').then(snap => {
+    if (loading) loading.style.display = 'none';
+
+    if (!snap.exists()) {
+      if (empty) empty.style.display = 'flex';
+      return;
+    }
+    const offers = [];
+    snap.forEach(child => {
+      const v = child.val();
+      offers.push({
+        id:        child.key,
+        title:     v.title       || 'Offer',
+        desc:      v.description || v.desc || '',
+        url:       v.link        || v.url  || '',
+        coins:     v.amount      || v.coins || 0,
+        image_url: v.image_url   || '',
+        icon:      v.icon        || '',
+        badge:     v.badge       || '',
+        order:     v.order       || v.id   || 99,
+      });
+    });
+    offers.sort((a, b) => String(a.order).localeCompare(String(b.order)));
+
+    list.innerHTML = offers.map(offer => buildOfferCard(offer, 'offer')).join('');
+    if (section) section.style.display = 'block';
+  }).catch(err => {
+    console.warn('Offers load error:', err);
+    if (loading) loading.style.display = 'none';
+    if (empty)   empty.style.display   = 'flex';
+  });
+}
+
+// ── Load Surveys (Survey tab) ──
+function loadSurveys() {
+  const loading = document.getElementById('surveyLoading');
+  const listEl  = document.getElementById('surveyList');
+  const emptyEl = document.getElementById('surveyEmpty');
+
+  if (loading) loading.style.display = 'flex';
+  if (listEl)  listEl.style.display  = 'none';
+  if (emptyEl) emptyEl.style.display = 'none';
+
+  db.ref('surveys').orderByChild('status').equalTo('active').once('value').then(snap => {
+    if (loading) loading.style.display = 'none';
+
+    if (!snap.exists()) {
+      if (emptyEl) { emptyEl.style.display = 'flex'; }
+      return;
+    }
+
+    const surveys = [];
+    snap.forEach(child => surveys.push({ id: child.key, ...child.val() }));
+    surveys.sort((a, b) => (a.order || 99) - (b.order || 99) || (b.coins || 0) - (a.coins || 0));
+
+    listEl.innerHTML = surveys.map(s => buildOfferCard(s, 'survey')).join('');
+    listEl.style.display = 'flex';
+  }).catch(err => {
+    console.warn('Surveys load error:', err);
+    if (loading) loading.style.display = 'none';
+    if (emptyEl) emptyEl.style.display = 'flex';
+  });
+}
+
+// ── Build Offer/Survey Card HTML ──
+// Supports Firebase fields: title, description/desc, link/url, amount/coins, image_url, icon, badge, time
+function buildOfferCard(item, type) {
+  const isSurvey  = type === 'survey';
+  const btnColor  = isSurvey ? '#7C3AED' : '#FF6B35';
+  const timeLabel = item.time ? '⏱ ~' + item.time + ' min' : '';
+  const badge     = item.badge || '';
+  const coins     = Number(item.coins || item.amount || 0);
+  const url       = item.url || item.link || '';
+  const desc      = item.desc || item.description || '';
+
+  // Icon: image_url > emoji icon > default
+  const iconHtml = item.image_url
+    ? '<img src="' + escAttr(item.image_url) + '" style="width:52px;height:52px;border-radius:14px;object-fit:cover;flex-shrink:0" onerror="this.style.display='none'">'
+    : '<div style="width:52px;height:52px;border-radius:14px;background:' + (isSurvey ? 'linear-gradient(135deg,#7C3AED,#a855f7)' : 'linear-gradient(135deg,#FF6B35,#f7931e)') + ';display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">' + (item.icon || (isSurvey ? '📋' : '🎁')) + '</div>';
+
+  return '<div style="background:#fff;border-radius:18px;padding:14px 14px 14px 14px;box-shadow:0 3px 14px rgba(0,0,0,.08);display:flex;gap:12px;align-items:center;position:relative;overflow:hidden">'
+    + (badge ? '<div style="position:absolute;top:8px;right:8px;background:' + btnColor + ';color:#fff;font-size:9px;font-weight:800;padding:2px 8px;border-radius:20px">' + escHtml(badge) + '</div>' : '')
+    + iconHtml
+    + '<div style="flex:1;min-width:0">'
+      + '<div style="font-size:13px;font-weight:800;color:#1a1a2e;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + escHtml(item.title || 'Offer') + '</div>'
+      + '<div style="font-size:11px;color:#90a4ae;margin-bottom:6px;line-height:1.4">' + escHtml(desc) + (timeLabel ? ' ' + timeLabel : '') + '</div>'
+      + '<span style="background:linear-gradient(135deg,#FFF3CD,#FFD700);color:#8a6000;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px">🪙 +' + coins.toLocaleString() + ' coins</span>'
+    + '</div>'
+    + '<button onclick="openDynamicOffer('' + escAttr(url) + '','' + escAttr(item.title||'Offer') + '',' + coins + ','' + escAttr(item.id||'') + '')" '
+      + 'style="background:' + btnColor + ';color:#fff;border:none;padding:9px 14px;border-radius:12px;font-family:Poppins,sans-serif;font-size:11px;font-weight:800;cursor:pointer;flex-shrink:0;white-space:nowrap">'
+      + (isSurvey ? '📝 Start' : '▶ Go')
+    + '</button>'
+  + '</div>';
+}
+
+// ── Open a dynamic offer/survey ──
+function openDynamicOffer(url, title, coins, id) {
+  if (!url) { showToast('⚠️ Offer link missing'); return; }
+  const user = auth.currentUser;
+
+  let finalUrl = url;
+  // Append UID for CPAGrip tracking
+  if (user && url.includes('cpagrip.com')) {
+    const sep = url.includes('?') ? '&' : '?';
+    finalUrl = url + sep + 'tracking_id=' + encodeURIComponent(user.uid);
+  }
+
+  showToast('🚀 ' + title + ' khul raha hai...');
+  const win = window.open(finalUrl, '_blank');
+  if (!win || win.closed || typeof win.closed === 'undefined') {
+    window.location.href = finalUrl;
+  }
+
+  // Auto-refresh balance after returning
+  setTimeout(() => {
+    if (userRef) {
+      userRef.once('value').then(snap => {
+        if (snap.exists()) {
+          const c = snap.val().coins || 0;
+          const el = document.getElementById('coinCount');
+          if (el) el.textContent = c.toLocaleString();
+        }
+      });
+    }
+  }, 6000);
+}
+
+// ── HTML escape helpers ──
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escAttr(s) {
+  return String(s).replace(/'/g,"\'").replace(/"/g,'&quot;');
+}
+
+// ── Hook into switchAppsTab so survey loads on demand ──
+const _origSwitchAppsTab = typeof switchAppsTab === 'function' ? switchAppsTab : null;
+
+// ── SERVICE WORKER REGISTER ──
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      // Pehle saare purane SW unregister karo
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r => r.unregister()));
+      // Naya SW register karo
+      await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+      console.log('SW v5 registered');
+    } catch (err) {
+      console.log('SW error:', err);
+    }
+  });
+}
+
+// ── PWA INSTALL PROMPT ──
+let deferredPrompt = null;
+
+// Detect iOS
+function isIOS() {
+  return /iphone|ipad|ipod/i.test(navigator.userAgent);
+}
+// Detect if already installed (standalone)
+function isInstalled() {
+  return window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+}
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  console.log('beforeinstallprompt fired');
+  // Show after user lands (3 sec) — only if came via referral link or not dismissed
+  setTimeout(() => showInstallModal(), 3000);
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null;
+  const modal = document.getElementById('installModal');
+  if (modal) modal.style.display = 'none';
+  showToast('🎉 TaskPay install ho gaya! Home screen pe dekho!');
+});
+
+function showInstallModal() {
+  if (isInstalled()) return; // Already installed
+  if (localStorage.getItem('installDismissed') === '1') return; // User ne dismiss kiya tha
+  const modal = document.getElementById('installModal');
+  if (!modal) return;
+
+  const iosSection     = document.getElementById('installIOSSection');
+  const androidSection = document.getElementById('installAndroidSection');
+
+  if (isIOS()) {
+    // iOS: show manual steps
+    if (iosSection)     iosSection.style.display     = 'block';
+    if (androidSection) androidSection.style.display = 'none';
+    modal.style.display = 'flex';
+  } else if (deferredPrompt) {
+    // Android/Chrome: show install button
+    if (iosSection)     iosSection.style.display     = 'none';
+    if (androidSection) androidSection.style.display = 'block';
+    modal.style.display = 'flex';
+  }
+}
+
+// Called from URL with ?ref= param — show install immediately after login
+function checkReferralInstallPrompt() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('ref') && !isInstalled()) {
+    setTimeout(() => showInstallModal(), 4000);
+  }
+}
+
+function triggerInstall() {
+  if (!deferredPrompt) {
+    showToast('📱 Safari mein: Share → Add to Home Screen karo');
+    return;
+  }
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(result => {
+    const modal = document.getElementById('installModal');
+    if (modal) modal.style.display = 'none';
+    if (result.outcome === 'accepted') {
+      showToast('✅ TaskPay install ho raha hai...');
+    }
+    deferredPrompt = null;
+  });
+}
+
+// Run on page load
+checkReferralInstallPrompt();
+</script>
+</body>
+</html>
